@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Aadhaar Card - Easy Government Guide</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #ffffff;
+            text-align: center;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(to right, #ff9933, #ffffff, #138808);
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        h1 {
+            color: #000080;
+            margin: 0;
+            font-size: 36px;
+        }
+
+        .menu-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 26px;
+            cursor: pointer;
+            color: #000080;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #f9f9f9;
+            overflow-x: hidden;
+            transition: 0.3s;
+            padding-top: 60px;
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+        }
+
+        .sidebar a {
+            padding: 10px 20px;
+            display: block;
+            text-decoration: none;
+            color: #000080;
+            text-align: left;
+        }
+
+        .sidebar a:hover {
+            background-color: #eef6ff;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 22px;
+            cursor: pointer;
+        }
+
+        /* Content */
+        .content {
+            padding: 40px 20px;
+        }
+
+        .aadhaar-img {
+            width: 240px;
+            margin-bottom: 10px;
+        }
+
+        .content h2 {
+            color: #000080;
+            margin-bottom: 30px;
+        }
+
+        /* Info Boxes */
+        .info-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .info-box {
+            width: 360px;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        .info-box h3 {
+            color: #000080;
+            margin-bottom: 15px;
+        }
+
+        /* Checkbox */
+        .checkbox-group label {
+            display: block;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .verify-btn {
+            margin-top: 10px;
+            padding: 8px 16px;
+            background-color: #000080;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        #result {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        /* ===== STEPS (NEW FORMAT) ===== */
+        .steps {
+            margin-top: 70px;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .steps h2 {
+            color: #000080;
+            margin-bottom: 30px;
+        }
+
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+        }
+
+        .step-card {
+            background-color: #eef6ff;
+            border-left: 6px solid #000080;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: left;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            background-color: #000080;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .step-card h3 {
+            color: #000080;
+            margin-top: 10px;
+        }
+
+        .step-card a {
+            color: #000080;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        /* Fee Structure */
+        .fee-box {
+            max-width: 400px;
+            margin: 50px auto;
+            background-color: #eef6ff;
+            border: 2px solid #138808;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .fee-box h3 {
+            color: #000080;
+            margin-bottom: 10px;
+        }
+
+        .fee {
+            font-size: 28px;
+            font-weight: bold;
+            color: #138808;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #000080;
+            color: white;
+            padding: 10px;
+            font-size: 14px;
+            margin-top: 60px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <span class="close-btn" onclick="closeMenu()">✖</span>
+
+        <a href="index.html">Home</a>
+
+        <!-- Categories -->
+        <a href="javascript:void(0)" onclick="toggleCategories()">
+            Categories <span id="catArrow">▶</span>
+        </a>
+
+        <div id="categories" style="display:none; padding-left:15px;">
+            <a href="aadhar.html">Aadhaar Card</a>
+            <a href="voter.html">Voter ID</a>
+            <a href="#">Driving License</a>
+            <a href="#">PAN Card</a>
+        </div>
+
+        <a href="#">About Us</a>
+        <a href="#">Feedback & Support</a>
+    </div>
+
+
+    <!-- Header -->
+    <div class="header">
+        <span class="menu-btn" onclick="openMenu()">☰</span>
+        <h1>EGG – Easy Government Guide</h1>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+
+        <img src="aadhar.png" alt="Aadhaar Card" class="aadhaar-img">
+        <h2>Aadhaar Card</h2>
+
+        <!-- Info Boxes -->
+        <div class="info-container">
+
+            <!-- Eligibility -->
+            <div class="info-box">
+                <h3>Eligibility Criteria</h3>
+                <p>
+                    Any resident of India is eligible if they have lived in India for
+                    <strong>182 days or more</strong> in the last 12 months.
+                </p>
+                <ul>
+                    <li>No minimum age (Baal Aadhaar)</li>
+                    <li>NRIs with valid Indian passport</li>
+                    <li>Parent’s Aadhaar required (children under 5)</li>
+
+                </ul>
+            </div>
+
+            <!-- Documents -->
+            <div class="info-box">
+                <h3>Documents Required</h3>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" id="poi"> Proof of Identity</label>
+                    <label><input type="checkbox" id="poa"> Proof of Address</label>
+                    <label><input type="checkbox" id="photo"> Passport Size Photograph</label>
+                    <label><input type="checkbox" id="phone"> Phone Number (OTP)</label>
+
+                </div>
+                <button class="verify-btn" onclick="verifyDocs()">Verify</button>
+                <div id="result"></div>
+            </div>
+
+        </div>
+
+        <!-- STEPS -->
+        <div class="steps">
+            <h2>Step-by-Step Process</h2>
+
+            <div class="steps-container">
+
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Find Enrolment Centre</h3>
+                    <p>Visit UIDAI official website to locate Aadhaar centres.</p>
+                    <a href="https://uidai.gov.in" target="_blank">uidai.gov.in</a>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Book Appointment</h3>
+                    <p>Optional but recommended for faster processing.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Carry Documents</h3>
+                    <p>Bring original identity and address proof.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3>Visit Centre</h3>
+                    <p>Attend appointment or walk-in.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">5</div>
+                    <h3>Biometric Capture</h3>
+                    <p>Photo, fingerprints & iris scan.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">6</div>
+                    <h3>Acknowledgement Slip</h3>
+                    <p>Use EID to track and download e-Aadhaar.</p>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Fee -->
+        <div class="fee-box">
+            <h3>Fee Structure</h3>
+            <div class="fee">₹ 0 (FREE)</div>
+            <p>Aadhaar enrolment is completely free.</p>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        © 2026 EGG - Easy Government Guide | For the citizens of India
+    </div>
+
+    <script>
+
+        function openMenu() {
+            document.getElementById("sidebar").style.width = "250px";
+        }
+
+        function closeMenu() {
+            document.getElementById("sidebar").style.width = "0";
+        }
+
+        function verifyDocs() {
+            const poi = document.getElementById("poi");
+            const poa = document.getElementById("poa");
+            const photo = document.getElementById("photo");
+            const phone = document.getElementById("phone");
+
+            const missing = [];
+
+            if (!poi.checked) missing.push("Proof of Identity");
+            if (!poa.checked) missing.push("Proof of Address");
+            if (!photo.checked) missing.push("Passport Size Photograph");
+            if (!phone.checked) missing.push("Phone Number (OTP)");
+
+            const result = document.getElementById("result");
+
+            if (missing.length === 0) {
+                result.innerHTML = "✔ All documents are ready";
+                result.style.color = "green";
+            } else {
+                result.innerHTML = "✖ Missing Documents:<br>" + missing.join("<br>");
+                result.style.color = "red";
+            }
+        }
+        function toggleCategories() {
+            const cat = document.getElementById("categories");
+            const arrow = document.getElementById("catArrow");
+
+            if (cat.style.display === "none") {
+                cat.style.display = "block";
+                arrow.innerHTML = "▼";
+            } else {
+                cat.style.display = "none";
+                arrow.innerHTML = "▶";
+            }
+        }
+
+    </script>
+
+
+</body>
+
+</html>
