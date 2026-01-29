@@ -1,0 +1,257 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 10px;
+    padding: 40px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.header img {
+    height: 60px;
+    margin-bottom: 15px;
+}
+
+.header h1 {
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.header p {
+    color: #666;
+    font-size: 16px;
+}
+
+.content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.card {
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 25px;
+    background: #f9f9f9;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card h2 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #667eea;
+    padding-bottom: 10px;
+}
+
+.card ul {
+    list-style: none;
+}
+
+.card li {
+    padding: 10px 0;
+    color: #555;
+    font-size: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.card li:last-child {
+    border-bottom: none;
+}
+
+.card li:before {
+    content: "✓ ";
+    color: #667eea;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.checkbox-list li:before {
+    content: "☐ ";
+}
+
+.steps-section {
+    margin-top: 30px;
+}
+
+.steps-section h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #667eea;
+    padding-bottom: 10px;
+}
+
+.steps-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.step {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    position: relative;
+    padding-left: 60px;
+}
+
+.step-number {
+    position: absolute;
+    left: 15px;
+    top: 15px;
+    width: 40px;
+    height: 40px;
+    background: white;
+    color: #667eea;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.step h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.step p {
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.step a {
+    color: white;
+    text-decoration: underline;
+    font-weight: 600;
+    transition: opacity 0.3s ease;
+}
+
+.step a:hover {
+    opacity: 0.8;
+}
+
+.types-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.type-box {
+    padding: 15px;
+    background: white;
+    border-left: 4px solid #667eea;
+    border-radius: 4px;
+}
+
+.type-box strong {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.type-box p {
+    color: #666;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.type-box a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.type-box a:hover {
+    color: #764ba2;
+    text-decoration: underline;
+}
+
+.two-column {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table tr {
+    border-bottom: 1px solid #eee;
+}
+
+table th {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 2px solid #667eea;
+    background: #f0f0f0;
+    font-weight: 600;
+    color: #333;
+}
+
+table td {
+    padding: 12px;
+}
+
+.important-notes {
+    background: #fff3cd;
+    border: 2px solid #ffc107;
+}
+
+.important-notes h2 {
+    border-bottom: 3px solid #ffc107;
+}
+
+.margin-top-30 {
+    margin-top: 30px;
+}
+
+@media (max-width: 768px) {
+    .two-column {
+        grid-template-columns: 1fr;
+    }
+
+    .container {
+        padding: 20px;
+    }
+
+    .header h1 {
+        font-size: 24px;
+    }
+
+    .steps-container {
+        grid-template-columns: 1fr;
+    }
+}
