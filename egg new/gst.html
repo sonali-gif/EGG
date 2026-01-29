@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GST Registration Guide | EGG</title>
+    <link rel="stylesheet" href="gststyle.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+    <div class="menu-icon">☰</div>
+    <div class="header-text">
+        <h1>EGG - Easy Government Guide</h1>
+        <p>Simplifying government documents for every Indian citizen IN</p>
+    </div>
+</header>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+
+    <h2 class="section-title">GST Registration Guide</h2>
+
+    <div class="cards">
+
+        <!-- ELIGIBILITY CARD -->
+        <div class="card">
+            <h3>Eligibility for GST Registration</h3>
+
+            <ul class="eligibility">
+                <li>Business turnover exceeds prescribed limit</li>
+                <li>Inter-state supply of goods or services</li>
+                <li>E-commerce seller or service provider</li>
+                <li>Mandatory for government tenders</li>
+                <li>Required to claim input tax credit</li>
+                <li>Casual taxable person</li>
+            </ul>
+        </div>
+
+        <!-- DOCUMENT CHECKLIST CARD -->
+        <div class="card checklist">
+            <h3>Required Documents</h3>
+
+            <label><input type="checkbox" id="photo"> Passport Size Photo</label>
+            <label><input type="checkbox" id="shop"> Shop Photo</label>
+            <label><input type="checkbox" id="pan"> PAN Card</label>
+            <label><input type="checkbox" id="aadhaar"> Aadhaar Card</label>
+            <label>
+                <input type="checkbox" id="address">
+                Address Proof (Electricity Bill / Rental Agreement)
+            </label>
+            <label>
+                <input type="checkbox" id="bank">
+                Passbook First Page / Cancelled Cheque
+            </label>
+
+            <button onclick="checkDocuments()">PROCEED</button>
+
+            <div id="result"></div>
+        </div>
+
+    </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+    © 2026 EGG - Easy Government Guide | For the citizens of India
+</footer>
+
+<script>
+function checkDocuments() {
+    let missing = [];
+
+    if (!photo.checked) missing.push("Passport Size Photo");
+    if (!shop.checked) missing.push("Shop Photo");
+    if (!pan.checked) missing.push("PAN Card");
+    if (!aadhaar.checked) missing.push("Aadhaar Card");
+    if (!address.checked) missing.push("Address Proof");
+    if (!bank.checked) missing.push("Bank Proof");
+
+    const result = document.getElementById("result");
+
+    if (missing.length === 0) {
+        result.innerHTML = "✅ All documents verified successfully";
+        result.style.color = "green";
+    } else {
+        result.innerHTML = "❌ Missing Documents:<br>" + missing.join("<br>");
+        result.style.color = "red";
+    }
+}
+</script>
+
+</body>
+</html>

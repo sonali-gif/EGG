@@ -1,0 +1,161 @@
+/* RESET */
+* {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    margin: 0;
+    background: #ffffff;
+    line-height: 1.6;
+}
+
+/* ================= HEADER ================= */
+.header {
+    height: 140px;
+    background: linear-gradient(
+        to right,
+        #f6a45a,
+        #f8e7c9,
+        #8bc34a
+    );
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+}
+
+.menu-icon {
+    font-size: 26px;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.header-text {
+    text-align: center;
+    flex: 1;
+}
+
+.header-text h1 {
+    margin: 0 0 8px 0;
+    color: #0a1a6b;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.header-text p {
+    margin-top: 5px;
+    color: #333;
+    font-size: 14px;
+}
+
+/* ================= MAIN ================= */
+.main {
+    padding: 50px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 40px;
+    color: #0a1a6b;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+/* ================= CARDS LAYOUT ================= */
+.cards {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+/* ================= CARD BASE ================= */
+.card {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+/* Eligibility card wider */
+.card:first-child {
+    width: 480px;
+}
+
+/* Document checklist card */
+.checklist {
+    width: 360px;
+}
+
+/* ================= CARD TITLES ================= */
+.card h3 {
+    color: #0a1a6b;
+    margin-bottom: 18px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+}
+
+/* ================= ELIGIBILITY ================= */
+.eligibility {
+    padding-left: 20px;
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+.eligibility li {
+    margin-bottom: 10px;
+    white-space: nowrap;
+}
+
+/* ================= CHECKLIST ================= */
+.checklist label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+/* ================= BUTTON ================= */
+button {
+    margin-top: 16px;
+    width: 100%;
+    padding: 11px;
+    background: #0a1a6b;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+}
+
+button:hover {
+    background: #081457;
+}
+
+/* ================= RESULT ================= */
+#result {
+    margin-top: 14px;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+/* ================= FOOTER ================= */
+.footer {
+    margin-top: 50px;
+    background: #0a1a6b;
+    color: white;
+    text-align: center;
+    padding: 16px;
+    font-size: 15px;
+    letter-spacing: 0.2px;
+}

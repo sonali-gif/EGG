@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>EGD - Easy Government Guide</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            /* White base */
+        }
+
+        /* Header section */
+        .header {
+            background: linear-gradient(to right, #ff9933, #ffffff, #138808);
+            padding: 40px 20px;
+        }
+
+        h1 {
+            color: #000080;
+            /* Navy blue */
+            margin: 0;
+            font-size: 36px;
+        }
+
+        p.quote {
+            color: #333;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        /* Card section */
+        .card-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin: 50px 20px;
+        }
+
+        .card {
+            width: 160px;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-top: 6px solid #ff9933;
+            /* Saffron */
+            transition: transform 0.2s;
+        }
+
+        .card img {
+            width: 80px;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-weight: bold;
+            color: #000080;
+            /* Blue text */
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            border-top-color: #138808;
+            /* Green on hover */
+            background-color: #eef6ff;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #000080;
+            color: white;
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        .menu-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 26px;
+            cursor: pointer;
+            color: #000080;
+        }
+
+        .header {
+            position: relative;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #f9f9f9;
+            overflow-x: hidden;
+            transition: 0.3s;
+            padding-top: 60px;
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+        }
+
+        .sidebar a {
+            padding: 10px 20px;
+            display: block;
+            text-decoration: none;
+            color: #000080;
+            text-align: left;
+        }
+
+        .sidebar a:hover {
+            background-color: #eef6ff;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            cursor: pointer;
+            font-size: 22px;
+        }
+
+        .category-title {
+            padding: 10px 20px;
+            font-weight: bold;
+            color: #000080;
+            text-align: left;
+            margin-top: 0px;
+        }
+
+        .sub-item {
+            padding-left: 40px;
+            font-size: 15px;
+        }
+
+        #category-list {
+            display: none;
+            /* hidden by default */
+        }
+
+        .intro-section {
+            margin: 40px 20px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .benefits-section {
+            margin: 50px 20px;
+        }
+
+        .benefits-section h2 {
+            color: #000080;
+            font-size: 28px;
+        }
+
+        .benefits-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .benefit-box {
+            width: 200px;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .benefit-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .benefit-box h3 {
+            color: #000080;
+            font-size: 18px;
+        }
+
+        .benefit-box p {
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="sidebar" class="sidebar">
+        <span class="close-btn" onclick="closeMenu()">✖</span>
+
+        <a href="index.html">Home</a>
+
+        <div class="category-title" onclick="toggleCategories()">
+            <span id="category-arrow">▶</span> Categories
+        </div>
+
+        <div id="category-list">
+            <a href="aadhaar.html" class="sub-item">Aadhaar Card</a>
+            <a href="voter.html" class="sub-item">Voter ID</a>
+            <a href="driving.html" class="sub-item">Driving License</a>
+            <a href="pan.html" class="sub-item">PAN Card</a>
+            <a href="passport.html" class="sub-item">Passport</a>
+            <a href="ration.html" class="sub-item">Ration Card</a>
+            <a href="ayushman.html" class="sub-item">Ayushman Card</a>
+            <a href="eshram.html" class="sub-item">E-Shram Card</a>
+            <a href="udyam.html" class="sub-item">Udyam Registration</a>
+            <a href="gst.html" class="sub-item">GST ID</a>
+        </div>
+        <a href="#">About Us</a>
+        <a href="#">Feedback & Support</a>
+    </div>
+
+    <!-- Header -->
+    <div class="header">
+        <span class="menu-btn" onclick="openMenu()">☰</span>
+        <h1>EGG - Easy Government Guide</h1>
+        <p class="quote">
+            Simplifying government documents for every Indian citizen 🇮🇳
+        </p>
+    </div>
+
+    <!-- Introduction -->
+    <div class="intro-section">
+        <p>Applying for government documents shouldn't be confusing. EGG provides clear, step-by-step guidance for all major Indian government documents and services. Learn about eligibility, required documents, procedures, timelines, and alternatives—all in one place.</p>
+    </div>
+
+    <!-- Cards -->
+    <div class="card-container">
+
+        <a href="aadhaar.html" class="card">
+            <img src="aadhaar.png" alt="Aadhaar Card">
+            <p>Aadhaar Card</p>
+        </a>
+
+        <a href="pan.html" class="card">
+            <img src="pan.png" alt="PAN Card">
+            <p>PAN Card</p>
+        </a>
+
+        <a href="voter.html" class="card">
+            <img src="voter.png" alt="Voter ID">
+            <p>Voter ID</p>
+        </a>
+
+        <a href="passport.html" class="card">
+            <img src="passport.png" alt="Passport">
+            <p>Passport</p>
+        </a>
+
+        <a href="driving.html" class="card">
+            <img src="driving.png" alt="Driving License">
+            <p>Driving License</p>
+        </a>
+
+        <a href="ration.html" class="card">
+            <img src="ration.png" alt="Ration Card">
+            <p>Ration Card</p>
+        </a>
+
+        <a href="ayushman.html" class="card">
+            <img src="ayushman.png" alt="Ayushman Card">
+            <p>Ayushman Card</p>
+        </a>
+
+        <a href="eshram.html" class="card">
+            <img src="eshram.png" alt="E-Shram Card">
+            <p>E-Shram Card</p>
+        </a>
+
+        <a href="udyam.html" class="card">
+            <img src="udyam.png" alt="Udyam Registration">
+            <p>Udyam Registration</p>
+        </a>
+
+        <a href="gst.html" class="card">
+            <img src="gst.png" alt="GST ID">
+            <p>GST ID</p>
+        </a>
+
+    </div>
+
+    <!-- Benefits Section -->
+    <div class="benefits-section">
+        <h2>Why Choose EGG?</h2>
+        <div class="benefits-grid">
+            <div class="benefit-box">
+                <div class="benefit-icon">📋</div>
+                <h3>Complete Information</h3>
+                <p>All details from eligibility to timelines in one place</p>
+            </div>
+            <div class="benefit-box">
+                <div class="benefit-icon">⚡</div>
+                <h3>Save Time</h3>
+                <p>No more searching across multiple websites</p>
+            </div>
+            <div class="benefit-box">
+                <div class="benefit-icon">✅</div>
+                <h3>Easy to Understand</h3>
+                <p>Simple language and step-by-step procedures</p>
+            </div>
+            <div class="benefit-box">
+                <div class="benefit-icon">🔄</div>
+                <h3>Alternatives Listed</h3>
+                <p>Know your options and choose what suits you best</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        © 2026 EGG - Easy Government Guide | For the citizens of India
+    </div>
+    <script>
+        function openMenu() {
+            document.getElementById("sidebar").style.width = "250px";
+        }
+
+        function closeMenu() {
+            document.getElementById("sidebar").style.width = "0";
+        }
+
+        function toggleCategories() {
+            const list = document.getElementById("category-list");
+            const arrow = document.getElementById("category-arrow");
+
+            if (list.style.display === "block") {
+                list.style.display = "none";
+                arrow.textContent = "▶";
+            } else {
+                list.style.display = "block";
+                arrow.textContent = "▼";
+            }
+        }
+    </script>
+
+</body>
+</html>
