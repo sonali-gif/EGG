@@ -1,0 +1,152 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #ffffff;
+    text-align: center;
+}
+
+/* Header */
+.header {
+    background: linear-gradient(to right, #ff9933, #ffffff, #138808);
+    padding: 40px 20px;
+    position: relative;
+}
+
+h1 {
+    color: #000080;
+    margin: 0;
+    font-size: 36px;
+}
+
+.quote {
+    color: #333;
+    margin-top: 10px;
+}
+
+/* Sidebar */
+.menu-btn {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    font-size: 26px;
+    cursor: pointer;
+}
+
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: #f9f9f9;
+    overflow-x: hidden;
+    transition: 0.3s;
+    padding-top: 60px;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.2);
+}
+
+.sidebar a {
+    display: block;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #000080;
+    text-align: left;
+}
+
+.sidebar a:hover {
+    background: #eef6ff;
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    cursor: pointer;
+}
+
+.category-title {
+    padding: 10px 20px;
+    font-weight: bold;
+    text-align: left;
+}
+
+.sub-item {
+    padding-left: 40px;
+    font-size: 15px;
+}
+
+#category-list {
+    display: none;
+}
+
+/* Intro */
+.intro-section {
+    margin: 40px 20px;
+    color: #333;
+}
+
+/* Cards */
+.card-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin: 50px 20px;
+}
+
+.card {
+    width: 160px;
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 12px;
+    text-decoration: none;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-top: 6px solid #ff9933;
+    transition: 0.2s;
+}
+
+.card img {
+    width: 80px;
+}
+
+.card p {
+    font-weight: bold;
+    color: #000080;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    border-top-color: #138808;
+    background: #eef6ff;
+}
+
+/* Benefits */
+.benefits-section {
+    margin: 50px 20px;
+}
+
+.benefits-grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.benefit-box {
+    width: 200px;
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.benefit-icon {
+    font-size: 40px;
+}
+
+/* Footer */
+.footer {
+    background: #000080;
+    color: white;
+    padding: 10px;
+}

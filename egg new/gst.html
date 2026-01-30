@@ -7,26 +7,25 @@
 </head>
 <body>
 
-<!-- HEADER -->
-<header class="header">
-    <div class="menu-icon">☰</div>
-    <div class="header-text">
-        <h1>EGG - Easy Government Guide</h1>
-        <p>Simplifying government documents for every Indian citizen IN</p>
-    </div>
-</header>
+<!-- HEADER (SAME AS EGG HOME) -->
+<div class="header">
+    <span class="menu-btn">☰</span>
+    <h1>EGG - Easy Government Guide</h1>
+    <p class="quote">Simplifying government documents for every Indian citizen IN</p>
+</div>
 
 <!-- MAIN CONTENT -->
-<main class="main">
+<div class="main">
+
+    <img src="gst.png" alt="GST Certificate" class="gst-img">
 
     <h2 class="section-title">GST Registration Guide</h2>
 
     <div class="cards">
 
-        <!-- ELIGIBILITY CARD -->
+        <!-- ELIGIBILITY -->
         <div class="card">
             <h3>Eligibility for GST Registration</h3>
-
             <ul class="eligibility">
                 <li>Business turnover exceeds prescribed limit</li>
                 <li>Inter-state supply of goods or services</li>
@@ -37,58 +36,80 @@
             </ul>
         </div>
 
-        <!-- DOCUMENT CHECKLIST CARD -->
+        <!-- REQUIRED DOCUMENTS -->
         <div class="card checklist">
             <h3>Required Documents</h3>
 
-            <label><input type="checkbox" id="photo"> Passport Size Photo</label>
-            <label><input type="checkbox" id="shop"> Shop Photo</label>
-            <label><input type="checkbox" id="pan"> PAN Card</label>
-            <label><input type="checkbox" id="aadhaar"> Aadhaar Card</label>
+            <label><input type="checkbox"> Passport Size Photo</label>
+            <label><input type="checkbox"> Shop Photo</label>
+            <label><input type="checkbox"> PAN Card</label>
+            <label><input type="checkbox"> Aadhaar Card</label>
             <label>
-                <input type="checkbox" id="address">
+                <input type="checkbox">
                 Address Proof (Electricity Bill / Rental Agreement)
             </label>
             <label>
-                <input type="checkbox" id="bank">
+                <input type="checkbox">
                 Passbook First Page / Cancelled Cheque
             </label>
 
-            <button onclick="checkDocuments()">PROCEED</button>
-
-            <div id="result"></div>
+            <button>PROCEED</button>
         </div>
 
     </div>
-</main>
+
+    <!-- STEPS -->
+    <h2 class="steps-title">Steps to Get GST Registration</h2>
+
+    <div class="steps-container">
+        <div class="step-card">
+            <span class="step-no">1</span>
+            <h4>Check Eligibility</h4>
+            <p>Verify your annual turnover and business type.
+                 GST mandatory if turnover > ₹40 lakhs 
+                 (₹20 lakhs in NE/special states).</p>
+        </div>
+
+        <div class="step-card">
+            <span class="step-no">2</span>
+            <h4>Apply Online</h4>
+            <p>Visit GST portal (www.gst.gov.in)
+                 and file application using Form REG-01. 
+                 Part A with basic details, Part B with detailed 
+                 information.</p>
+        </div>
+
+        <div class="step-card">
+            <span class="step-no">3</span>
+            <h4>Upload Documents</h4>
+            <p>Upload self-attested scanned copies of PAN, Aadhar, 
+                address proof, and business documents. 
+                File size typically 5 MB per document.</p>
+        </div>
+
+        <div class="step-card">
+            <span class="step-no">4</span>
+            <h4>Submit & Verification</h4>
+            <p>Submit application with declaration. 
+                Tax officer may request additional info. 
+                Physical verification may be conducted if required.</p>
+        </div>
+
+        <div class="step-card">
+            <span class="step-no">5</span>
+            <h4>Get Certificate</h4>
+            <p>Upon approval, GST certificate and 
+                15-digit GSTIN issued. Downloadable 
+                from portal. Can start filing returns within 3 days.</p>
+        </div>
+    </div>
+
+</div>
 
 <!-- FOOTER -->
-<footer class="footer">
-    © 2026 EGG - Easy Government Guide | For the citizens of India
-</footer>
-
-<script>
-function checkDocuments() {
-    let missing = [];
-
-    if (!photo.checked) missing.push("Passport Size Photo");
-    if (!shop.checked) missing.push("Shop Photo");
-    if (!pan.checked) missing.push("PAN Card");
-    if (!aadhaar.checked) missing.push("Aadhaar Card");
-    if (!address.checked) missing.push("Address Proof");
-    if (!bank.checked) missing.push("Bank Proof");
-
-    const result = document.getElementById("result");
-
-    if (missing.length === 0) {
-        result.innerHTML = "✅ All documents verified successfully";
-        result.style.color = "green";
-    } else {
-        result.innerHTML = "❌ Missing Documents:<br>" + missing.join("<br>");
-        result.style.color = "red";
-    }
-}
-</script>
+<div class="footer">
+    © 2026 EGG - Easy Government Guide | India
+</div>
 
 </body>
 </html>
