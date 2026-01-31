@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aadhaar Card Guide | EGG</title>
+    <link rel="stylesheet" href="gststyle.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <span class="menu-btn">☰</span>
+    <h1><a href="index.html" class="logo-link">EGG - Easy Government Guide</a></h1>
+    <p class="quote">Simplifying government documents for every Indian citizen IN</p>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+    <img src="aadhaar.png" alt="Aadhaar Card" class="gst-img">
+
+    <h2 class="section-title">Aadhaar Card Guide</h2>
+
+    <div class="cards">
+
+        <!-- ELIGIBILITY -->
+        <div class="card">
+            <h3>Eligibility Criteria</h3>
+            <ul class="eligibility">
+                <li>Any resident of India is eligible if they have lived in India for 182 days or more in the last 12 months</li>
+                <li>No minimum age (Baal Aadhaar)</li>
+                <li>NRIs with valid Indian passport</li>
+                <li>Parent's Aadhaar required (children under 5)</li>
+            </ul>
+        </div>
+
+        <!-- REQUIRED DOCUMENTS -->
+        <div class="card checklist">
+            <h3>Documents Required</h3>
+
+            <label><input type="checkbox" id="identity"> Proof of Identity</label>
+            <label><input type="checkbox" id="address-doc"> Proof of Address</label>
+            <label><input type="checkbox" id="photo-aadhar"> Passport Size Photograph</label>
+            <label><input type="checkbox" id="phone"> Phone Number (OTP)</label>
+
+            <button>PROCEED</button>
+            <div id="message" style="margin-top: 10px; font-weight: bold;"></div>
+        </div>
+
+    </div>
+
+    <!-- STEPS -->
+    <h2 class="steps-title">Step-by-Step Process</h2>
+
+    <div class="steps-container">
+
+        <div class="step-card">
+            <span class="step-no">1</span>
+            <h4>Find Enrolment Centre</h4>
+            <p>
+                Visit UIDAI official website to locate Aadhaar centres.
+                <br><a href="https://uidai.gov.in/" target="_blank">uidai.gov.in</a>
+            </p>
+        </div>
+
+        <div class="step-card">
+            <span class="step-no">2</span>
+            <h4>Book Appointment</h4>
+            <p>
+                Optional but recommended for faster processing.
+            </p>
+        </div>
+
+        <div class="step-card">
+            <span class="step-no">3</span>
+            <h4>Carry Documents</h4>
+            <p>
+                Bring original identity and address proof.
+            </p>
+        </div>
+
+        <div class="step-card">
+            <span class="step-no">4</span>
+            <h4>Visit Centre</h4>
+            <p>
+                Attend appointment or walk-in.
+            </p>
+        </div>
+
+        <div class="step-card">
+            <span class="step-no">5</span>
+            <h4>Biometric Capture</h4>
+            <p>
+                Photo, fingerprints & iris scan.
+            </p>
+        </div>
+
+        <div class="step-card">
+            <span class="step-no">6</span>
+            <h4>Acknowledgement Slip</h4>
+            <p>
+                Use EID to track and download e-Aadhaar.
+            </p>
+        </div>
+
+    </div>
+
+    <hr class="section-separator">
+
+    <!-- IMPORTANT INFORMATION -->
+    <div class="important-info">
+        <h2 class="section-title left-align">Fee Structure</h2>
+        <p><strong>₹ 0 (FREE)</strong></p>
+        <p>Aadhaar enrolment is completely free.</p>
+        <br>
+        <p><strong>Processing Time:</strong> 90 days for new enrollment</p>
+        <p><strong>Validity:</strong> Lifetime validity, no renewal required</p>
+        <p><strong>Aadhaar Number:</strong> 12-digit unique identification number</p>
+        <p><strong>Uses:</strong> Banking, mobile connection, government services, subsidies</p>
+        <p><strong>Update:</strong> Address and other details can be updated online</p>
+        <p><strong>Security:</strong> Biometric authentication ensures secure access</p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    © 2026 EGG - Easy Government Guide | India
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const proceedButton = document.querySelector('button');
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const messageDiv = document.getElementById('message');
+
+    proceedButton.addEventListener('click', function() {
+        const unchecked = [];
+        checkboxes.forEach(function(checkbox) {
+            const label = checkbox.parentElement;
+            let guideLink = label.querySelector('.guide-link');
+            if (!checkbox.checked) {
+                unchecked.push(checkbox.id);
+                if (!guideLink) {
+                    guideLink = document.createElement('a');
+                    guideLink.className = 'guide-link';
+                    const guideUrls = {
+                        identity: 'identity-proof-guide.html',
+                        'address-doc': 'address-proof-guide.html'
+                    };
+                    guideLink.href = guideUrls[checkbox.id] || '#';
+                    guideLink.textContent = 'Guide';
+                    guideLink.style.marginLeft = '10px';
+                    guideLink.style.color = '#000080';
+                    guideLink.style.textDecoration = 'underline';
+                    label.appendChild(guideLink);
+                }
+                guideLink.style.display = 'inline';
+            } else {
+                if (guideLink) {
+                    guideLink.style.display = 'none';
+                }
+            }
+        });
+
+        if (unchecked.length === 0) {
+            messageDiv.textContent = 'All documents are available!';
+            messageDiv.style.color = 'green';
+        } else {
+            const docNames = {
+                identity: 'Proof of Identity',
+                'address-doc': 'Proof of Address',
+                'photo-aadhar': 'Passport Size Photograph',
+                phone: 'Phone Number'
+            };
+            const missing = unchecked.map(id => docNames[id]).join(', ');
+            messageDiv.textContent = `Missing documents: ${missing}.`;
+            messageDiv.style.color = 'red';
+        }
+    });
+});
+</script>
+
+</body>
+</html>

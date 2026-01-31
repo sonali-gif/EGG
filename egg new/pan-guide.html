@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAN Card Guide | EGG</title>
+    <link rel="stylesheet" href="gststyle.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <span class="menu-btn">☰</span>
+    <h1><a href="index.html" class="logo-link">EGG - Easy Government Guide</a></h1>
+    <p class="quote">Simplifying government documents for every Indian citizen IN</p>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+    <img src="pan.png" alt="PAN Card" class="gst-img">
+
+    <h2 class="section-title">PAN Card Guide</h2>
+
+    <div class="cards">
+
+        <!-- ELIGIBILITY -->
+        <div class="card">
+            <h3>Eligibility for PAN Card</h3>
+            <ul class="eligibility">
+                <li>Indian citizens and residents</li>
+                <li>Individuals, HUFs, firms, companies</li>
+                <li>Trusts, associations, and other entities</li>
+                <li>Required for tax purposes</li>
+                <li>Mandatory for high-value transactions</li>
+            </ul>
+        </div>
+
+        <!-- REQUIRED DOCUMENTS -->
+        <div class="card checklist">
+            <h3>Required Documents</h3>
+
+            <label><input type="checkbox" id="id-proof"> Identity Proof</label>
+            <label><input type="checkbox" id="address-pan"> Address Proof</label>
+            <label><input type="checkbox" id="dob"> Date of Birth Proof</label>
+            <label><input type="checkbox" id="photo-pan"> Recent Photograph</label>
+
+            <button>PROCEED</button>
+            <div id="message" style="margin-top: 10px; font-weight: bold;"></div>
+        </div>
+
+    </div>
+
+    <!-- TYPES OF PAN CARDS -->
+    <h2 class="section-title left-align">Types of PAN Cards</h2>
+    <div class="types-container">
+        <div class="type-card">
+            <h4>Major PAN Card</h4>
+            <p>For individuals aged 18 years and above. Used for tax filing, investments, and financial transactions.</p>
+        </div>
+        <div class="type-card">
+            <h4>Minor PAN Card</h4>
+            <p>For individuals below 18 years. Can be applied by parents/guardians. Required for investments in minor's name.</p>
+        </div>
+    </div>
+
+    <!-- STEPS -->
+    <h2 class="steps-title">Steps to Get PAN Card</h2>
+
+    <div class="steps-container">
+
+        <div class="step-card">
+            <span class="step-no">1</span>
+            <h4>Apply Online</h4>
+            <p>
+                Visit NSDL or UTIITSL website and fill
+                Form 49A for new PAN or 49AA for NRI.
+            </p>
+        </div>
+
+        <div class="step-card">
+            <span class="step-no">2</span>
+            <h4>Upload Documents</h4>
+            <p>
+                Submit scanned copies of identity proof,
+                address proof, and photograph.
+            </p>
+        </div>
+
+        <div class="step-card">
+            <span class="step-no">3</span>
+            <h4>Payment</h4>
+            <p>
+                Pay the application fee online
+                (₹107 for Indian communication address).
+            </p>
+        </div>
+
+        <div class="step-card">
+            <span class="step-no">4</span>
+            <h4>Verification</h4>
+            <p>
+                Application processed and PAN number
+                generated within 15-30 days.
+            </p>
+        </div>
+
+        <div class="step-card">
+            <span class="step-no">5</span>
+            <h4>Collect PAN Card</h4>
+            <p>
+                Download e-PAN or collect physical card
+                from designated post office.
+            </p>
+        </div>
+
+    </div>
+
+    <hr class="section-separator">
+
+    <!-- IMPORTANT INFORMATION -->
+    <div class="important-info">
+        <h2 class="section-title left-align">Important Information</h2>
+        <p><strong>Processing Time:</strong> 15-30 days for new PAN card</p>
+        <p><strong>Cost:</strong> ₹107 for Indian address, ₹994 for foreign address</p>
+        <p><strong>Validity:</strong> Lifetime validity, no renewal required</p>
+        <p><strong>PAN Number:</strong> 10-character alphanumeric unique identifier</p>
+        <p><strong>Uses:</strong> Income tax filing, investments, bank accounts, property transactions</p>
+        <p><strong>Correction:</strong> Changes can be made online through NSDL portal</p>
+        <p><strong>e-PAN:</strong> Digital version available instantly after approval</p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    © 2026 EGG - Easy Government Guide | India
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const proceedButton = document.querySelector('button');
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const messageDiv = document.getElementById('message');
+
+    proceedButton.addEventListener('click', function() {
+        const unchecked = [];
+        checkboxes.forEach(function(checkbox) {
+            const label = checkbox.parentElement;
+            let guideLink = label.querySelector('.guide-link');
+            if (!checkbox.checked) {
+                unchecked.push(checkbox.id);
+                if (!guideLink) {
+                    guideLink = document.createElement('a');
+                    guideLink.className = 'guide-link';
+                    const guideUrls = {
+                        'id-proof': 'identity-proof-guide.html',
+                        'address-pan': 'address-proof-guide.html',
+                        'dob': 'dob-proof-guide.html',
+                        'photo-pan': 'photo-guide.html'
+                    };
+                    guideLink.href = guideUrls[checkbox.id] || '#';
+                    guideLink.textContent = 'Guide';
+                    guideLink.style.marginLeft = '10px';
+                    guideLink.style.color = '#000080';
+                    guideLink.style.textDecoration = 'underline';
+                    label.appendChild(guideLink);
+                }
+                guideLink.style.display = 'inline';
+            } else {
+                if (guideLink) {
+                    guideLink.style.display = 'none';
+                }
+            }
+        });
+
+        if (unchecked.length === 0) {
+            messageDiv.textContent = 'All documents are available!';
+            messageDiv.style.color = 'green';
+        } else {
+            const docNames = {
+                'id-proof': 'Identity Proof',
+                'address-pan': 'Address Proof',
+                'dob': 'Date of Birth Proof',
+                'photo-pan': 'Photograph'
+            };
+            const missing = unchecked.map(id => docNames[id]).join(', ');
+            messageDiv.textContent = `Missing documents: ${missing}.`;
+            messageDiv.style.color = 'red';
+        }
+    });
+});
+</script>
+
+</body>
+</html>

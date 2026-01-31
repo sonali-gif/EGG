@@ -11,9 +11,8 @@
 <!-- HEADER -->
 <div class="header">
     <span class="menu-btn">☰</span>
-    <h1>EGG - Easy Government Guide</h1>
+    <h1><a href="index.html" class="logo-link">EGG - Easy Government Guide</a></h1>
     <p class="quote">Simplifying government documents for every Indian citizen IN</p>
-    <a href="index.html" class="back-link">← Back to Home</a>
 </div>
 
 <!-- MAIN CONTENT -->
@@ -42,16 +41,46 @@
         <div class="card checklist">
             <h3>Required Documents</h3>
 
-            <label><input type="checkbox"> Passport Size Photo</label>
-            <label><input type="checkbox"> Shop Photo</label>
-            <label><input type="checkbox"> PAN Card</label>
-            <label><input type="checkbox"> Aadhaar Card</label>
-            <label><input type="checkbox"> Address Proof (Electricity Bill / Rental Agreement)</label>
-            <label><input type="checkbox"> Passbook First Page / Cancelled Cheque</label>
+            <label><input type="checkbox" id="passport"> Passport Size Photo</label>
+            <label><input type="checkbox" id="shop"> Shop Photo</label>
+            <label><input type="checkbox" id="pan"> PAN Card</label>
+            <label><input type="checkbox" id="aadhar"> Aadhaar Card</label>
+            <label><input type="checkbox" id="address"> Address Proof (Electricity Bill / Rental Agreement)</label>
+            <label><input type="checkbox" id="bank"> Passbook First Page / Cancelled Cheque</label>
 
             <button>PROCEED</button>
+            <div id="message" style="margin-top: 10px; font-weight: bold;"></div>
         </div>
 
+    </div>
+
+    <!-- TYPES OF GST REGISTRATION -->
+    <h2 class="section-title left-align">Types of GST Registration</h2>
+    <div class="types-container">
+        <div class="type-card">
+            <h4>Regular GST</h4>
+            <p>Standard registration for businesses above threshold turnover</p>
+        </div>
+        <div class="type-card">
+            <h4>Composition Scheme</h4>
+            <p>Simplified scheme for businesses &lt; ₹1.5 crore turnover</p>
+        </div>
+        <div class="type-card">
+            <h4>E-Commerce Operator</h4>
+            <p>Special registration for online sellers and platforms</p>
+        </div>
+        <div class="type-card">
+            <h4>Casual Taxable Person</h4>
+            <p>For occasional supply of goods/services</p>
+        </div>
+        <div class="type-card">
+            <h4>Non-Resident Taxable Person</h4>
+            <p>For foreign businesses supplying to India</p>
+        </div>
+        <div class="type-card">
+            <h4>Input Service Distributor</h4>
+            <p>For entities distributing credit to branches</p>
+        </div>
     </div>
 
     <!-- STEPS -->
@@ -72,7 +101,7 @@
             <span class="step-no">2</span>
             <h4>Apply Online</h4>
             <p>
-                Visit www.gst.gov.in and apply using Form REG-01
+                Visit <a href="https://www.gst.gov.in/" target="_blank">www.gst.gov.in</a> and apply using Form REG-01
                 (Part A & Part B).
             </p>
         </div>
@@ -120,12 +149,165 @@
         <p><strong>Input Tax Credit:</strong> Can claim credit on GST paid on input goods/services</p>
     </div>
 
+    <hr class="section-separator">
+
+    <!-- GST REGISTRATION TIMELINE & FEES -->
+    <h2 class="section-title left-align">GST Registration Timeline & Fees</h2>
+    <table class="timeline-table">
+        <thead>
+            <tr>
+                <th>Stage</th>
+                <th>Duration</th>
+                <th>Cost</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Online Application</td>
+                <td>5-7 days</td>
+                <td>FREE</td>
+                <td>Provisional GSTIN issued</td>
+            </tr>
+            <tr>
+                <td>Verification (if required)</td>
+                <td>3-5 days</td>
+                <td>FREE</td>
+                <td>Officer may visit premises</td>
+            </tr>
+            <tr>
+                <td>Certificate Issuance</td>
+                <td>1-2 days</td>
+                <td>FREE</td>
+                <td>Final GSTIN certificate</td>
+            </tr>
+            <tr>
+                <td>Composition Scheme</td>
+                <td>3-5 days</td>
+                <td>FREE</td>
+                <td>Simplified rate (1-6% tax)</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- ALTERNATIVES & TIPS -->
+    <h2 class="section-title left-align">Alternatives & Tips</h2>
+    <div class="tips">
+        <p><strong>Voluntary Registration:</strong> Even if below threshold, can voluntarily register for business credibility</p>
+        <p><strong>Composition Scheme:</strong> If turnover &lt; ₹1.5 crore, choose composition for simplified returns (only quarterly)</p>
+        <p><strong>Digital Signature:</strong> E-sign option available for faster processing</p>
+        <p><strong>CA Assistance:</strong> Chartered Accountants can file on your behalf with authorization</p>
+        <p><strong>Provisional GSTIN:</strong> Issued immediately upon application; final after verification</p>
+        <p><strong>Address Change:</strong> Notify GST office within 15 days of any address change</p>
+        <p><strong>Invoice Requirements:</strong> Must issue compliant invoices post-registration with GSTIN mentioned</p>
+        <p><strong>Input Credit:</strong> Claim input GST only on invoices with valid GSTIN</p>
+    </div>
+
+    <!-- GST TAX SLABS -->
+    <h2 class="section-title left-align">GST Tax Slabs</h2>
+    <table class="tax-slabs-table">
+        <thead>
+            <tr>
+                <th>GST Rate</th>
+                <th>Items/Services</th>
+                <th>Examples</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>0%</td>
+                <td>Exempt goods</td>
+                <td>Basic food, books, medicines, seeds</td>
+            </tr>
+            <tr>
+                <td>5%</td>
+                <td>Essential commodities</td>
+                <td>Spices, oil, rice, flour, handlooms</td>
+            </tr>
+            <tr>
+                <td>12%</td>
+                <td>Common goods/services</td>
+                <td>Most items, hair salon, restaurants</td>
+            </tr>
+            <tr>
+                <td>18%</td>
+                <td>Standard rate</td>
+                <td>Electronics, apparel, air travel, hotels</td>
+            </tr>
+            <tr>
+                <td>28%</td>
+                <td>Luxury & vice goods</td>
+                <td>Diamonds, luxury cars, tobacco, liquor</td>
+            </tr>
+        </tbody>
+    </table>
+
 </div>
 
 <!-- FOOTER -->
 <div class="footer">
     © 2026 EGG - Easy Government Guide | India
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const proceedButton = document.querySelector('button');
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const messageDiv = document.getElementById('message');
+
+    proceedButton.addEventListener('click', function() {
+        const unchecked = [];
+        checkboxes.forEach(function(checkbox) {
+            const label = checkbox.parentElement;
+            let guideLink = label.querySelector('.guide-link');
+            if (!checkbox.checked) {
+                unchecked.push(checkbox.id);
+                if (!guideLink) {
+                    guideLink = document.createElement('a');
+                    guideLink.className = 'guide-link';
+                    // Set href based on id
+                    const guideUrls = {
+                        passport: 'passport-guide.html',
+                        shop: 'shop-photo-guide.html',
+                        pan: 'pan-card-guide.html',
+                        aadhar: 'aadhar-guide.html',
+                        address: 'address-proof-guide.html',
+                        bank: 'bank-details-guide.html'
+                    };
+                    guideLink.href = guideUrls[checkbox.id] || '#';
+                    guideLink.textContent = 'Guide';
+                    guideLink.style.marginLeft = '10px';
+                    guideLink.style.color = '#000080';
+                    guideLink.style.textDecoration = 'underline';
+                    label.appendChild(guideLink);
+                }
+                guideLink.style.display = 'inline';
+            } else {
+                if (guideLink) {
+                    guideLink.style.display = 'none';
+                }
+            }
+        });
+
+        if (unchecked.length === 0) {
+            messageDiv.textContent = 'All documents are available!';
+            messageDiv.style.color = 'green';
+        } else {
+            const docNames = {
+                passport: 'Passport Size Photo',
+                shop: 'Shop Photo',
+                pan: 'PAN Card',
+                aadhar: 'Aadhaar Card',
+                address: 'Address Proof',
+                bank: 'Bank Details'
+            };
+            const missing = unchecked.map(id => docNames[id]).join(', ');
+            messageDiv.textContent = `Missing documents: ${missing}.`;
+            messageDiv.style.color = 'red';
+        }
+    });
+});
+</script>
 
 </body>
 </html>
