@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>EGD - Easy Government Guide</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            /* White base */
+        }
+
+        /* Header section */
+        .header {
+            background: linear-gradient(to right, #ff9933, #ffffff, #138808);
+            padding: 40px 20px;
+        }
+
+        h1 {
+            color: #000080;
+            /* Navy blue */
+            margin: 0;
+            font-size: 36px;
+        }
+
+        p.quote {
+            color: #333;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        /* Card section */
+        .card-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin: 50px 20px;
+        }
+
+        .card {
+            width: 160px;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-top: 6px solid #ff9933;
+            /* Saffron */
+            transition: transform 0.2s;
+        }
+
+        .card img {
+            width: 80px;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-weight: bold;
+            color: #000080;
+            /* Blue text */
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            border-top-color: #138808;
+            /* Green on hover */
+            background-color: #eef6ff;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #000080;
+            color: white;
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        .menu-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 26px;
+            cursor: pointer;
+            color: #000080;
+        }
+
+        .header {
+            position: relative;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #f9f9f9;
+            overflow-x: hidden;
+            transition: 0.3s;
+            padding-top: 60px;
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+        }
+
+        .sidebar a {
+            padding: 10px 20px;
+            display: block;
+            text-decoration: none;
+            color: #000080;
+            text-align: left;
+        }
+
+        .sidebar a:hover {
+            background-color: #eef6ff;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            cursor: pointer;
+            font-size: 22px;
+        }
+
+        .category-title {
+            padding: 10px 20px;
+            font-weight: bold;
+            color: #000080;
+            text-align: left;
+            margin-top: 0px;
+        }
+
+        .sub-item {
+            padding-left: 40px;
+            font-size: 15px;
+        }
+
+        #category-list {
+            display: none;
+            /* hidden by default */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="sidebar" class="sidebar">
+        <span class="close-btn" onclick="closeMenu()">✖</span>
+
+        <a href="index.html">Home</a>
+
+        <div class="category-title" onclick="toggleCategories()">
+            <span id="category-arrow">▶</span> Categories
+        </div>
+
+        <div id="category-list">
+            <a href="aadhar.html" class="sub-item">Aadhaar Card</a>
+            <a href="voter.html" class="sub-item">Voter ID</a>
+            <a href="driving.html" class="sub-item">Driving License</a>
+            <a href="pan-minor.html" class="sub-item">PAN Card (Minor)</a>
+            <a href="pan-major.html" class="sub-item">PAN Card (Major)</a>
+            <a href="gst.html" class="sub-item">GST Registration</a>
+            <a href="passport.html" class="sub-item">Indian Passport</a>
+            <a href="ration.html" class="sub-item">Ration Card</a>
+
+        </div>
+        <a href="about.html">About Us</a>
+        <a href="feedback.html">Feedback & Support</a>
+
+    </div>
+
+    <!-- Header -->
+    <div class="header">
+        <span class="menu-btn" onclick="openMenu()">☰</span>
+        <h1>EGG - Easy Government Guide</h1>
+        <p class="quote">
+            Simplifying government documents for every Indian citizen 🇮🇳
+        </p>
+    </div>
+
+    <!-- Cards -->
+    <div class="card-container">
+
+        <a href="aadhar.html" class="card">
+            <img src="aadhar.png" alt="Aadhaar Card">
+            <p>Aadhaar Card</p>
+        </a>
+
+        <a href="voter.html" class="card">
+            <img src="voter.png" alt="Voter ID">
+            <p>Voter ID</p>
+        </a>
+
+        <a href="driving.html" class="card">
+            <img src="driving.png" alt="Driving License">
+            <p>Driving License</p>
+        </a>
+
+        <a href="pan-minor.html" class="card">
+            <img src="pan.png" alt="PAN Card Minor">
+            <p>PAN Card (Minor)</p>
+        </a>
+
+        <a href="pan-major.html" class="card">
+            <img src="pan.png" alt="PAN Card Major">
+            <p>PAN Card (Major)</p>
+        </a>
+
+        <a href="gst.html" class="card">
+            <img src="gst.png" alt="GST Registration">
+            <p>GST Registration</p>
+        </a>
+        <a href="passport.html" class="card">
+            <img src="passport.png" alt="Indian Passport">
+            <p>Indian Passport</p>
+        </a>
+        <a href="ration.html" class="card">
+            <img src="ration.png" alt="Ration Card">
+            <p>Ration Card</p>
+        </a>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        © 2026 EGG -Easy Government Guide | For the citizens of India
+    </div>
+    <script>
+        function openMenu() {
+            document.getElementById("sidebar").style.width = "250px";
+        }
+
+        function closeMenu() {
+            document.getElementById("sidebar").style.width = "0";
+        }
+
+        function toggleCategories() {
+            const list = document.getElementById("category-list");
+            const arrow = document.getElementById("category-arrow");
+
+            if (list.style.display === "block") {
+                list.style.display = "none";
+                arrow.textContent = "▶";
+            } else {
+                list.style.display = "block";
+                arrow.textContent = "▼";
+            }
+        }
+    </script>
+
+</html>

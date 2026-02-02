@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>About Us - EGG</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #ffffff;
+            text-align: center;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(to right, #ff9933, #ffffff, #138808);
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        h1 {
+            color: #000080;
+            margin: 0;
+            font-size: 36px;
+        }
+
+        .menu-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 26px;
+            cursor: pointer;
+            color: #000080;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #f9f9f9;
+            overflow-x: hidden;
+            transition: 0.3s;
+            padding-top: 60px;
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+        }
+
+        .sidebar a {
+            padding: 10px 20px;
+            display: block;
+            text-decoration: none;
+            color: #000080;
+            text-align: left;
+        }
+
+        .category-title {
+            padding: 10px 20px;
+            font-weight: bold;
+            color: #000080;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .sub-item {
+            padding-left: 40px;
+            font-size: 15px;
+        }
+
+        #category-list {
+            display: none;
+        }
+
+        .sidebar a:hover {
+            background-color: #eef6ff;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 22px;
+            cursor: pointer;
+        }
+
+        /* Content */
+        .content {
+            padding: 40px 20px;
+            max-width: 1000px;
+            margin: auto;
+            text-align: left;
+        }
+
+        .content h2 {
+            color: #000080;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .section {
+            background-color: #eef6ff;
+            border-left: 6px solid #000080;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .section h3 {
+            color: #000080;
+            margin-bottom: 10px;
+        }
+
+        .section ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #000080;
+            color: white;
+            padding: 10px;
+            font-size: 14px;
+            margin-top: 60px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <span class="close-btn" onclick="closeMenu()">✖</span>
+
+        <a href="index.html">Home</a>
+
+        <div class="category-title" onclick="toggleCategories()">
+            <span id="category-arrow">▶</span> Categories
+        </div>
+
+        <div id="category-list">
+            <a href="aadhar.html" class="sub-item">Aadhaar Card</a>
+            <a href="voter.html" class="sub-item">Voter ID</a>
+            <a href="driving.html" class="sub-item">Driving License</a>
+            <a href="pan-minor.html" class="sub-item">PAN Card (Minor)</a>
+            <a href="pan-major.html" class="sub-item">PAN Card (Major)</a>
+            <a href="gst.html" class="sub-item">GST Registration</a>
+            <a href="passport.html" class="sub-item">Indian Passport</a>
+            <a href="ration.html" class="sub-item">Ration Card</a>
+
+        </div>
+
+        <a href="about.html">About Us</a>
+        <a href="feedback.html">Feedback & Support</a>
+    </div>
+
+    <!-- Header -->
+    <div class="header">
+        <span class="menu-btn" onclick="openMenu()">☰</span>
+        <h1>EGG – Easy Government Guide</h1>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+        <h2>About Us</h2>
+
+        <div class="section">
+            <h3>Introduction</h3>
+            <p>In today’s digital era, many government services are online. However, citizens often face difficulties
+                while applying for documents like Aadhaar Card, PAN Card, and Voter ID. The information is usually
+                scattered and hard to understand.</p>
+            <p>EGG (Easy Government Guide) is a web-based system that provides clear, step-by-step guidance for applying
+                for government documents. It explains required documents, procedures, alternatives, and expected
+                timelines in a simple, user-friendly way.</p>
+        </div>
+
+        <div class="section">
+            <h3>Problem Statement</h3>
+            <ul>
+                <li>Lack of clear and centralized information</li>
+                <li>Complex procedures and technical language</li>
+                <li>Uncertainty about required documents</li>
+                <li>Dependence on agents or middlemen</li>
+            </ul>
+            <p>As a result, citizens waste time, make repeated visits, or submit incorrect applications. EGG addresses
+                this by providing accurate, structured guidance in one place.</p>
+        </div>
+
+        <div class="section">
+            <h3>Objectives</h3>
+            <ul>
+                <li>Centralized platform for government document guidance</li>
+                <li>Simplified step-by-step instructions</li>
+                <li>Reduce errors and confusion during application</li>
+                <li>Save time and effort for citizens</li>
+                <li>Increase transparency in government procedures</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>Scope</h3>
+            <ul>
+                <li>Guidance for Aadhaar, PAN, and Voter ID</li>
+                <li>Required and alternative documents</li>
+                <li>Estimated timelines and official fees</li>
+                <li>Direct links to official government portals</li>
+            </ul>
+            <p>Note: EGG does not process or submit applications directly; it acts only as an informational guide.</p>
+        </div>
+
+        <div class="section">
+            <h3>System Overview & Modules</h3>
+            <ul>
+                <li><strong>User Interface Module:</strong> Clean web interface for selecting documents</li>
+                <li><strong>Document Information Module:</strong> Step-by-step application process with required
+                    documents</li>
+                <li><strong>Timeline & Fee Module:</strong> Estimated processing time and official fees</li>
+                <li><strong>Official Links Module:</strong> Direct links to government websites to avoid fake portals
+                </li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>Advantages & Future Enhancements</h3>
+            <ul>
+                <li>Easy to use and understand</li>
+                <li>Saves time and effort for users</li>
+                <li>Reduces dependency on agents</li>
+                <li>Can add more documents (Passport, Driving License, etc.)</li>
+                <li>Future multilingual support and AI-based assistance</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        © 2026 EGG - Easy Government Guide | For the citizens of India
+    </div>
+
+    <script>
+        function openMenu() {
+            document.getElementById("sidebar").style.width = "250px";
+        }
+
+        function closeMenu() {
+            document.getElementById("sidebar").style.width = "0";
+        }
+
+        function toggleCategories() {
+            const list = document.getElementById("category-list");
+            const arrow = document.getElementById("category-arrow");
+
+            if (list.style.display === "block") {
+                list.style.display = "none";
+                arrow.textContent = "▶";
+            } else {
+                list.style.display = "block";
+                arrow.textContent = "▼";
+            }
+        }
+    </script>
+
+</body>
+
+</html>

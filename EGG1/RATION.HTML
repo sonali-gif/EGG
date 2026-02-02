@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ration Card - Easy Government Guide</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #ffffff;
+            text-align: center;
+        }
+
+        .header {
+            background: linear-gradient(to right, #ff9933, #ffffff, #138808);
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        h1 {
+            color: #000080;
+            margin: 0;
+            font-size: 36px;
+        }
+
+        .menu-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 26px;
+            cursor: pointer;
+            color: #000080;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #f9f9f9;
+            overflow-x: hidden;
+            transition: 0.3s;
+            padding-top: 60px;
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+        }
+
+        .sidebar a {
+            padding: 10px 20px;
+            display: block;
+            text-decoration: none;
+            color: #000080;
+            text-align: left;
+        }
+
+        .category-title {
+            padding: 10px 20px;
+            font-weight: bold;
+            color: #000080;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .sub-item {
+            padding-left: 40px;
+            font-size: 15px;
+        }
+
+        #category-list {
+            display: none;
+        }
+
+        .sidebar a:hover {
+            background-color: #eef6ff;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 22px;
+            cursor: pointer;
+        }
+
+        .content {
+            padding: 40px 20px;
+        }
+
+        .aadhaar-img {
+            width: 240px;
+            margin-bottom: 10px;
+        }
+
+        .content h2 {
+            color: #000080;
+            margin-bottom: 30px;
+        }
+
+        .info-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .info-box {
+            width: 360px;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        .info-box h3 {
+            color: #000080;
+        }
+
+        .checkbox-group label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .verify-btn {
+            margin-top: 10px;
+            padding: 8px 16px;
+            background-color: #000080;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        #result {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .steps {
+            margin-top: 70px;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+        }
+
+        .step-card {
+            background-color: #eef6ff;
+            border-left: 6px solid #000080;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: left;
+            position: relative;
+        }
+
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            background-color: #000080;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .fee-box {
+            max-width: 400px;
+            margin: 50px auto;
+            background-color: #eef6ff;
+            border: 3px solid #138808;
+            border-radius: 12px;
+            padding: 25px;
+        }
+
+        .fee-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .fee-table th,
+        .fee-table td {
+            border: 1px solid #138808;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .fee-table th {
+            background-color: #138808;
+            color: white;
+        }
+
+        .footer {
+            background-color: #000080;
+            color: white;
+            padding: 10px;
+            margin-top: 60px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="sidebar" class="sidebar">
+        <span class="close-btn" onclick="closeMenu()">✖</span>
+        <a href="index.html">Home</a>
+
+        <div class="category-title" onclick="toggleCategories()">
+            <span id="category-arrow">▶</span> Categories
+        </div>
+
+        <div id="category-list">
+            <a href="aadhar.html" class="sub-item">Aadhaar Card</a>
+            <a href="voter.html" class="sub-item">Voter ID</a>
+            <a href="driving.html" class="sub-item">Driving License</a>
+            <a href="pan-minor.html" class="sub-item">PAN Card (Minor)</a>
+            <a href="pan-major.html" class="sub-item">PAN Card (Major)</a>
+            <a href="gst.html" class="sub-item">GST Registration</a>
+            <a href="passport.html" class="sub-item">Indian Passport</a>
+            <a href="ration.html" class="sub-item">Ration Card</a>
+        </div>
+
+        <a href="about.html">About Us</a>
+        <a href="feedback.html">Feedback & Support</a>
+    </div>
+
+    <div class="header">
+        <span class="menu-btn" onclick="openMenu()">☰</span>
+        <h1>EGG – Easy Government Guide</h1>
+    </div>
+
+    <div class="content">
+        <img src="ration.png" class="aadhaar-img">
+        <h2>Ration Card – India</h2>
+
+        <div class="info-container">
+            <div class="info-box">
+                <h3>Eligibility Criteria</h3>
+                <ul>
+                    <li>Citizen of India</li>
+                    <li>Resident of the applying state</li>
+                    <li>No existing ration card in another state</li>
+                    <li>Category: APL / BPL / AAY / PHH</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h3>Documents Required</h3>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" id="poi"> Identity Proof</label>
+                    <label><input type="checkbox" id="poa"> Address Proof</label>
+                    <label><input type="checkbox" id="dob"> Family / Income Proof</label>
+                </div>
+                <button class="verify-btn" onclick="verifyDocs()">Verify</button>
+                <div id="result"></div>
+            </div>
+        </div>
+
+        <!-- Steps -->
+        <div class="steps">
+            <h2>Step-by-Step (Online Application – State Wise)</h2>
+
+            <div class="steps-container">
+
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Open Ration Card Portal</h3>
+                    <p>
+                        Ration cards are issued by State Governments.
+                        Visit the National Food Security Act portal and select your state.
+                    </p>
+                    <a href="https://nfsa.gov.in" target="_blank">Visit NFSA Portal</a>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Select Your State Website</h3>
+                    <p>
+                        On the NFSA website, choose your state to open the Food & Civil Supplies portal.
+                        Each state has its own application system.
+                    </p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Click on New Ration Card Application</h3>
+                    <p>
+                        Look for options like:
+                    </p>
+                    <ul>
+                        <li>Apply for New Ration Card</li>
+                        <li>NFSA Citizen Services</li>
+                        <li>Food Security Services</li>
+                    </ul>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3>Login / Register Using Aadhaar</h3>
+                    <p>
+                        Register using Aadhaar number of the Head of Family and verify using OTP
+                        sent to the linked mobile number.
+                    </p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">5</div>
+                    <h3>Enter Head of Family Details</h3>
+                    <p>
+                        Fill details carefully as per Aadhaar:
+                    </p>
+                    <ul>
+                        <li>Full Name</li>
+                        <li>Date of Birth</li>
+                        <li>Gender</li>
+                        <li>Mobile Number</li>
+                    </ul>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">6</div>
+                    <h3>Add Family Member Information</h3>
+                    <p>
+                        Add details of all family members including Aadhaar number, age,
+                        and relationship with the head of family.
+                    </p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">7</div>
+                    <h3>Enter Address & Select Ration Category</h3>
+                    <p>
+                        Enter full residential address and select ration card type:
+                        APL / BPL / AAY / PHH (NFSA).
+                    </p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">8</div>
+                    <h3>Upload Required Documents</h3>
+                    <p>
+                        Upload clear scanned copies of Aadhaar cards, address proof,
+                        income certificate (if applicable), and photograph.
+                    </p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">9</div>
+                    <h3>Submit Application & Note Reference Number</h3>
+                    <p>
+                        After submission, you will receive an application/reference number.
+                        Save it for tracking your ration card status.
+                    </p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">10</div>
+                    <h3>Verification & Ration Card Issued</h3>
+                    <p>
+                        Local Food Inspector may verify details.
+                        Once approved, digital or physical ration card is issued.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- Offline Steps -->
+        <div class="steps">
+            <h2>Step-by-Step (Offline Application)</h2>
+
+            <div class="steps-container">
+
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Visit Nearest Office</h3>
+                    <p>
+                        Visit Fair Price Shop (Ration Shop), Food & Civil Supplies Office,
+                        Tehsil Office, or Gram Panchayat.
+                    </p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Collect Ration Card Application Form</h3>
+                    <p>
+                        Ask for the New Ration Card application form from the office counter.
+                    </p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Fill the Form Carefully</h3>
+                    <p>
+                        Fill the form in BLOCK LETTERS with correct personal,
+                        family, and address details.
+                    </p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3>Attach Required Documents</h3>
+                    <p>
+                        Attach self-attested copies of Aadhaar cards, address proof,
+                        income certificate (if applicable), and photographs.
+                    </p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">5</div>
+                    <h3>Submit Application</h3>
+                    <p>
+                        Submit the completed form at the same office
+                        and collect acknowledgement slip.
+                    </p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">6</div>
+                    <h3>Verification Process</h3>
+                    <p>
+                        Local authority may conduct document or home verification
+                        before approval.
+                    </p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">7</div>
+                    <h3>Ration Card Issued</h3>
+                    <p>
+                        After approval, ration card is either sent by post
+                        or collected from the office.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="fee-box">
+            <h3>Fees</h3>
+            <table class="fee-table">
+                <tr>
+                    <th>Type</th>
+                    <th>Fee</th>
+                </tr>
+                <tr>
+                    <td>Application</td>
+                    <td>Free</td>
+                </tr>
+                <tr>
+                    <td>Card Printing</td>
+                    <td>₹5 – ₹50</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="footer">
+        © 2026 EGG – Easy Government Guide | For the citizens of India
+    </div>
+
+    <script>
+        function openMenu() { document.getElementById("sidebar").style.width = "250px"; }
+        function closeMenu() { document.getElementById("sidebar").style.width = "0"; }
+        function toggleCategories() {
+            const list = document.getElementById("category-list");
+            const arrow = document.getElementById("category-arrow");
+            list.style.display = list.style.display === "block" ? "none" : "block";
+            arrow.textContent = list.style.display === "block" ? "▼" : "▶";
+        }
+        function verifyDocs() {
+            const missing = [];
+            if (!poi.checked) missing.push("Identity Proof");
+            if (!poa.checked) missing.push("Address Proof");
+            if (!dob.checked) missing.push("Family / Income Proof");
+            const r = document.getElementById("result");
+            if (missing.length === 0) { r.innerHTML = "✔ All documents are ready"; r.style.color = "green"; }
+            else { r.innerHTML = "✖ Missing:<br>" + missing.join("<br>"); r.style.color = "red"; }
+        }
+    </script>
+
+</body>
+
+</html>

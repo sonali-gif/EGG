@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Feedback & Support - EGG</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #ffffff;
+            text-align: center;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(to right, #ff9933, #ffffff, #138808);
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        h1 {
+            color: #000080;
+            margin: 0;
+            font-size: 36px;
+        }
+
+        .menu-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 26px;
+            cursor: pointer;
+            color: #000080;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #f9f9f9;
+            overflow-x: hidden;
+            transition: 0.3s;
+            padding-top: 60px;
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+        }
+
+        .sidebar a {
+            padding: 10px 20px;
+            display: block;
+            text-decoration: none;
+            color: #000080;
+            text-align: left;
+        }
+
+        .category-title {
+            padding: 10px 20px;
+            font-weight: bold;
+            color: #000080;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .sub-item {
+            padding-left: 40px;
+            font-size: 15px;
+        }
+
+        #category-list {
+            display: none;
+        }
+
+        .sidebar a:hover {
+            background-color: #eef6ff;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 22px;
+            cursor: pointer;
+        }
+
+        /* Content */
+        .content {
+            padding: 40px 20px;
+            max-width: 1000px;
+            margin: auto;
+            text-align: left;
+        }
+
+        .content h2 {
+            color: #000080;
+            margin-bottom: 30px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+        }
+
+        /* Form */
+        input,
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            margin: 8px 0;
+            border: 2px solid #138808;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #000080;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #138808;
+        }
+
+        label {
+            font-weight: bold;
+            color: #000080;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #000080;
+            color: white;
+            padding: 10px;
+            font-size: 14px;
+            margin-top: 60px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <span class="close-btn" onclick="closeMenu()">✖</span>
+
+        <a href="index.html">Home</a>
+
+        <div class="category-title" onclick="toggleCategories()">
+            <span id="category-arrow">▶</span> Categories
+        </div>
+
+        <div id="category-list">
+            <a href="aadhar.html" class="sub-item">Aadhaar Card</a>
+            <a href="voter.html" class="sub-item">Voter ID</a>
+            <a href="driving.html" class="sub-item">Driving License</a>
+            <a href="pan-minor.html" class="sub-item">PAN Card (Minor)</a>
+            <a href="pan-major.html" class="sub-item">PAN Card (Major)</a>
+            <a href="gst.html" class="sub-item">GST Registration</a>
+            <a href="passport.html" class="sub-item">Indian Passport</a>
+            <a href="ration.html" class="sub-item">Ration Card</a>
+
+        </div>
+
+        <a href="about.html">About Us</a>
+        <a href="feedback.html">Feedback & Support</a>
+    </div>
+
+    <!-- Header -->
+    <div class="header">
+        <span class="menu-btn" onclick="openMenu()">☰</span>
+        <h1>EGG – Easy Government Guide</h1>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+        <h2>Feedback & Support</h2>
+
+        <!-- Feedback Section -->
+        <div class="section">
+            <h3>Give Us Your Feedback</h3>
+            <p>We value your suggestions and experiences. Please share your feedback below:</p>
+            <form id="feedbackForm" onsubmit="submitFeedback(event)">
+                <label for="name">Name</label>
+                <input type="text" id="name" placeholder="Your Name" required>
+
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Your Email" required>
+
+                <label for="feedback">Feedback</label>
+                <textarea id="feedback" rows="5" placeholder="Write your feedback..." required></textarea>
+
+                <button type="submit">Submit Feedback</button>
+                <p id="feedbackResult"></p>
+            </form>
+        </div>
+
+        <!-- Support Section -->
+        <div class="section">
+            <h3>Need Support?</h3>
+            <p>If you are facing issues while using EGG or need help with any government document, please contact us:
+            </p>
+            <form id="supportForm" onsubmit="submitSupport(event)">
+                <label for="supportName">Name</label>
+                <input type="text" id="supportName" placeholder="Your Name" required>
+
+                <label for="supportEmail">Email</label>
+                <input type="email" id="supportEmail" placeholder="Your Email" required>
+
+                <label for="issue">Describe Your Issue</label>
+                <textarea id="issue" rows="5" placeholder="Describe your problem..." required></textarea>
+
+                <button type="submit">Request Support</button>
+                <p id="supportResult"></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        © 2026 EGG - Easy Government Guide | For the citizens of India
+    </div>
+
+    <script>
+        // Sidebar functions
+        function openMenu() {
+            document.getElementById("sidebar").style.width = "250px";
+        }
+
+        function closeMenu() {
+            document.getElementById("sidebar").style.width = "0";
+        }
+
+        function toggleCategories() {
+            const list = document.getElementById("category-list");
+            const arrow = document.getElementById("category-arrow");
+
+            if (list.style.display === "block") {
+                list.style.display = "none";
+                arrow.textContent = "▶";
+            } else {
+                list.style.display = "block";
+                arrow.textContent = "▼";
+            }
+        }
+
+        // Feedback form submission
+        function submitFeedback(e) {
+            e.preventDefault();
+            document.getElementById("feedbackResult").innerHTML = "✔ Thank you for your feedback!";
+            document.getElementById("feedbackResult").style.color = "green";
+            document.getElementById("feedbackForm").reset();
+        }
+
+        // Support form submission
+        function submitSupport(e) {
+            e.preventDefault();
+            document.getElementById("supportResult").innerHTML = "✔ Support request submitted. We will contact you soon!";
+            document.getElementById("supportResult").style.color = "green";
+            document.getElementById("supportForm").reset();
+        }
+    </script>
+
+</body>
+
+</html>
