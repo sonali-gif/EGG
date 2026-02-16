@@ -209,3 +209,24 @@ button:active {
         padding: 25px;
     }
 }
+
+.chat-suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 8px 12px;
+    background: #f1f1f1;
+}
+
+.chat-suggestions button {
+    padding: 5px 10px;
+    font-size: 0.75em;
+    border: none;
+    border-radius: 12px;
+    background: #e0e0ff;
+    cursor: pointer;
+}
+
+.chat-suggestions button:hover {
+    background: #cfd2ff;
+}

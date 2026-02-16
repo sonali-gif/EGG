@@ -57,6 +57,17 @@ if (resumeDiv) {
     }
 }
 
+function sendSuggestion(text) {
+    displayMessage(text, 'user');
+
+    const botResponse = getBotResponse(text);
+
+    setTimeout(() => {
+        displayMessage(botResponse, 'bot');
+    }, 300);
+}
+
+
 /* ===== DOWNLOAD PDF ===== */
 function downloadPDF() {
     const element = document.getElementById("resume");
