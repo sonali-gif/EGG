@@ -19,10 +19,31 @@ if (form) {
             experience: document.getElementById("experience").value
         };
 
+        // Still save locally (optional but good)
         localStorage.setItem("resumeData", JSON.stringify(resumeData));
-        window.location.href = "preview.html";
+
+        // Send to PHP using fetch
+        fetch("save.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(resumeData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === "success") {
+                window.location.href = "preview.html";
+            } else {
+                alert("Error saving to database!");
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
     });
 }
+
 
 /* ===== RESUME PREVIEW ===== */
 const resumeDiv = document.getElementById("resume");

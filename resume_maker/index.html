@@ -16,13 +16,52 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 100vh;
-    padding: 40px 20px;
+    padding: 20px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto 30px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px 30px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.user-info {
+    color: white;
+    font-weight: 600;
+    font-size: 0.95em;
+}
+
+.logout-btn {
+    padding: 8px 18px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.logout-btn:hover {
+    background: white;
+    color: #667eea;
 }
 
 h1 {
     color: white;
     font-size: 2.8em;
-    margin-bottom: 15px;
     font-weight: 700;
     letter-spacing: 1px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
@@ -361,7 +400,13 @@ h1 {
 
 <body>
 
-<h1>📝 Resume Maker</h1>
+<div class="navbar">
+    <h1>📝 Resume Maker</h1>
+    <div class="nav-links">
+        <span class="user-info" id="userInfo"></span>
+        <button class="logout-btn" onclick="logout()" id="logoutBtn" style="display:none;">Logout</button>
+    </div>
+</div>
 <p class="subtitle">Create a professional resume in minutes</p>
 
 <div class="template-container">
@@ -489,6 +534,34 @@ document.addEventListener('click', function(event) {
         closeChatbot();
     }
 });
+
+// Authentication check
+async function checkAuth() {
+    try {
+        const response = await fetch('check_auth.php');
+        const data = await response.json();
+        
+        if (data.authenticated) {
+            document.getElementById('userInfo').textContent = `👤 Welcome, ${data.username}!`;
+            document.getElementById('logoutBtn').style.display = 'inline-block';
+        } else {
+            // Redirect to login if not authenticated
+            window.location.href = 'login.html';
+        }
+    } catch (error) {
+        console.error('Auth check failed:', error);
+        window.location.href = 'login.html';
+    }
+}
+
+function logout() {
+    fetch('logout.php').then(() => {
+        window.location.href = 'login.html';
+    });
+}
+
+// Check authentication on page load
+window.addEventListener('load', checkAuth);
 
 </script>
 
