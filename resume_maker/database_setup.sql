@@ -7,8 +7,15 @@ CREATE TABLE IF NOT EXISTS users (
     username VARCHAR(50) UNIQUE NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
+    is_verified TINYINT(1) DEFAULT 0,
+    otp VARCHAR(6) DEFAULT NULL,
+    otp_created_at DATETIME DEFAULT NULL,
+    otp_resend_count INT DEFAULT 0,
+    last_login DATETIME DEFAULT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_otp (otp),
+    INDEX idx_is_verified (is_verified)
 );
 
 -- Create resumes table
@@ -29,9 +36,20 @@ CREATE TABLE IF NOT EXISTS resumes (
 -- Create indexes for better query performance
 CREATE INDEX idx_username ON users(username);
 CREATE INDEX idx_email ON users(email);
-CREATE INDEX idx_user_resumes ON resumes(user_id);
+-- NOTE: `resumes.user_id` already has an index declared inside the CREATE TABLE (INDEX (user_id)),
+-- so the explicit `CREATE INDEX idx_user_resumes` was removed to avoid duplicate-key errors.
 
 -- Optional: Insert a test user (password: test123)
 -- Username: testuser, Password: test123 (already hashed)
 INSERT IGNORE INTO users (username, email, password) 
 VALUES ('testuser', 'test@example.com', '$2y$10$abcdefghijklmnopqrstuvwxyz.HashedPassword123');
+
+-- Safe migration: ensure OTP/verification columns exist for existing databases (MySQL 8+ supports IF NOT EXISTS)
+ALTER TABLE users ADD COLUMN IF NOT EXISTS is_verified TINYINT(1) DEFAULT 0;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS otp VARCHAR(6) DEFAULT NULL;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS otp_created_at DATETIME DEFAULT NULL;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS otp_resend_count INT DEFAULT 0;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS last_login DATETIME DEFAULT NULL;
+-- Indexes to speed verification/lookup (if your server errors on the lines below, run them manually or remove IF NOT SUPPORTED)
+ALTER TABLE users ADD INDEX idx_otp (otp);
+ALTER TABLE users ADD INDEX idx_is_verified (is_verified);

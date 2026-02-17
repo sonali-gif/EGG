@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Verify OTP — Resume Maker</title>
+    <style>
+        :root{ --bg: linear-gradient(135deg,#6b8cff,#8e78ff); --card:#fff; --muted:#6b7280; --accent:#6b8cff }
+        *{box-sizing:border-box}
+        body{font-family:Segoe UI,system-ui,Arial; margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center; background:var(--bg); padding:20px}
+        .card{background:var(--card); width:100%; max-width:420px; padding:28px; border-radius:14px; box-shadow:0 12px 40px rgba(0,0,0,0.18)}
+        h1{margin:0 0 8px;font-size:1.25rem;color:#111}
+        p.lead{margin:0 0 16px;color:var(--muted)}
+        .row{display:flex; gap:8px; align-items:center}
+        input[type=text], input[type=email]{padding:10px;border:1px solid #e6e9ef;border-radius:8px;font-size:1rem}
+        .btn{background:var(--accent); color:#fff; border:none; padding:10px 14px; border-radius:8px; cursor:pointer}
+        .link{background:transparent;border:1px solid #e6e9ef;padding:10px 12px;border-radius:8px;cursor:pointer}
+        .muted{color:var(--muted); margin-top:10px}
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Verify OTP</h1>
+        <p class="lead">Enter the 6‑digit code sent to <strong id="pendingEmail">your email</strong></p>
+
+        <div class="row" style="margin-bottom:10px">
+            <input id="otp" type="text" maxlength="6" inputmode="numeric" placeholder="Enter OTP" autocomplete="off" />
+            <button id="verifyBtn" class="btn">Verify</button>
+            <button id="resendBtn" class="link">Resend</button>
+        </div>
+        <div id="resendMessage" class="muted"></div>
+        <div style="margin-top:16px; color:#666; font-size:0.9rem">If you don't know the email used, open <a href="signup.html">Sign up</a> again.</div>
+    </div>
+
+    <script>
+    // Clear any prefilled OTP (prevent browser/autofill from inserting values)
+    document.addEventListener('DOMContentLoaded', () => {
+        const otpEl = document.getElementById('otp');
+        try { otpEl.value = ''; otpEl.setAttribute('autocomplete','off'); } catch(e){}
+
+        const pending = sessionStorage.getItem('pending_verification_email');
+        if (pending) document.getElementById('pendingEmail').textContent = pending;
+    });
+
+    document.getElementById('verifyBtn').addEventListener('click', async function(){
+        const btn=this; const otp=document.getElementById('otp').value.trim();
+        if (!/^\d{6}$/.test(otp)) { alert('Enter a 6-digit OTP'); return; }
+        btn.disabled=true;
+        try{
+            const res = await fetch('verify_otp.php',{method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:'otp='+encodeURIComponent(otp)});
+            const data = await res.json();
+            if (data.success){ alert(data.message || 'Verified'); sessionStorage.removeItem('pending_verification_email'); window.location.href='login.html'; }
+            else alert(data.message || 'Wrong OTP');
+        }catch(e){ alert('Network error'); }
+        finally{ btn.disabled=false }
+    });
+
+    document.getElementById('resendBtn').addEventListener('click', async function(){
+        const btn=this; const msg=document.getElementById('resendMessage'); btn.disabled=true; msg.textContent='Resending...';
+        const pending = sessionStorage.getItem('pending_verification_email') || '';
+        try{
+            const res = await fetch('resend_otp.php',{ method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:'email='+encodeURIComponent(pending)});
+            const data = await res.json();
+            if (data.success){ msg.style.color='green'; msg.textContent = data.message || 'OTP resent'; if (data.otp_debug) alert('OTP (dev): '+data.otp_debug); }
+            else { msg.style.color='red'; msg.textContent = data.message || 'Could not resend OTP'; }
+        }catch(e){ msg.style.color='red'; msg.textContent='Network error'; }
+        finally{ btn.disabled=false; setTimeout(()=> msg.textContent='',4000) }
+    });
+    </script>
+</body>
+</html>

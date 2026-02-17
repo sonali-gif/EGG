@@ -38,6 +38,7 @@ EGG/re/
 ├── form.html               # Resume form
 ├── preview.html            # Resume preview
 ├── my_resumes.php          # User's resume list
+├── get_resume.php          # Fetch saved resume (JSON, session-protected)
 ├── save.php                # Save resume
 ├── edit.php                # Edit resume
 ├── update.php              # Update resume
@@ -117,7 +118,7 @@ CREATE TABLE resumes (
 2. Fill in username, email, password
 3. Password strength indicator shows real-time feedback
 4. Click "Create Account"
-5. Redirected to login page
+5. OTP is sent to your email — open `verify_otp.html` and enter the 6‑digit code to complete verification (verification is required before login). If you didn't receive it, use the **Resend OTP** button on `verify_otp.html` (60s cooldown).
 
 ### Create Resume
 1. Login to your account
@@ -177,7 +178,7 @@ Response:
 ```json
 {
     "success": true,
-    "message": "Account created successfully"
+    "message": "OTP sent to your email"
 }
 ```
 
@@ -199,6 +200,12 @@ Response:
     "message": "Logged out successfully"
 }
 ```
+
+### Resume endpoints
+
+- POST /save.php — Save a new resume for the authenticated user.
+- GET /get_resume.php?id=<id> — Return resume JSON (session-protected).
+- POST /update.php — Update an existing resume (skills/experience).
 
 ## Troubleshooting
 
@@ -236,8 +243,9 @@ Response:
 1. After login, select a template
 2. Fill in resume information
 3. Save resume
-4. Verify in "My Resumes"
-5. Edit and update
+4. Verify the new resume appears in `My Resumes` (card view)
+5. Click **Edit** → modify fields → click **Update** and confirm the success message
+6. Click **View** on a card (opens `preview.html?id=<id>`) — verify saved data and use the Download button
 
 ## Support
 

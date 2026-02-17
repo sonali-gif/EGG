@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg,#6b8cff 0%, #8e78ff 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -22,13 +22,13 @@
         }
 
         .signup-container {
-            background: white;
-            padding: 50px 40px;
-            border-radius: 18px;
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+            background: #ffffffee;
+            padding: 36px 28px;
+            border-radius: 14px;
+            box-shadow: 0 12px 40px rgba(16,24,40,0.18);
             width: 100%;
-            max-width: 420px;
-            animation: slideIn 0.5s ease-out;
+            max-width: 480px;
+            animation: slideIn 0.45s ease-out;
         }
 
         @keyframes slideIn {
@@ -48,9 +48,9 @@
         }
 
         .signup-header h1 {
-            color: #667eea;
-            font-size: 2.2em;
-            margin-bottom: 10px;
+            color: #2b2b2b;
+            font-size: 1.9em;
+            margin-bottom: 6px;
         }
 
         .signup-header p {
@@ -92,16 +92,17 @@
 
         .signup-btn {
             width: 100%;
-            padding: 13px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 12px;
+            background: linear-gradient(90deg,#6b8cff,#8e78ff);
             color: white;
             border: none;
             border-radius: 10px;
-            font-weight: 600;
-            font-size: 1.05em;
+            font-weight: 700;
+            font-size: 1.02em;
             cursor: pointer;
-            transition: opacity 0.3s, transform 0.2s;
-            margin-top: 30px;
+            transition: transform 0.12s ease, box-shadow .12s ease;
+            margin-top: 20px;
+            box-shadow: 0 6px 18px rgba(107,140,255,0.18);
         }
 
         .signup-btn:hover {
@@ -134,7 +135,7 @@
         .message {
             padding: 12px 15px;
             border-radius: 8px;
-            margin-bottom: 20px;
+            margin-bottom: 14px;
             border-left: 4px solid;
             display: none;
             animation: slideDown 0.3s ease-out;
@@ -285,6 +286,15 @@
         </button>
     </form>
 
+    <div id="otpSection" style="display:none; margin-top:18px;">
+        <h3 style="margin-bottom:6px">Enter OTP</h3>
+        <p style="margin-bottom:8px">We sent a 6‑digit code to <strong id="pendingEmail">your email</strong>.</p>
+        <input type="text" id="otpInput" maxlength="6" inputmode="numeric" placeholder="Enter OTP" style="padding:10px;border-radius:8px;border:1px solid #ddd;width:180px;">
+        <button id="verifyOtpBtn" onclick="verifyOTP_inline()" style="margin-left:8px;padding:8px 12px;border-radius:8px;">Verify</button>
+        <button id="resendOtpBtn" onclick="resendOTP_inline()" style="margin-left:8px;padding:8px 12px;border-radius:8px;">Resend OTP</button>
+        <div id="otpMessage" style="margin-top:8px;color:#666"></div>
+    </div>
+
     <div class="login-link">
         Already have an account? <a href="login.html">Sign in here</a>
     </div>
@@ -367,26 +377,96 @@ async function handleSignup(event) {
             body: formData
         });
 
-        const result = await response.json();
+        const text = await response.text();
+        let result;
+        try {
+            result = JSON.parse(text || '{}');
+        } catch (err) {
+            console.error('Non-JSON response from signup_handler.php:', response.status, text);
+            messageDiv.textContent = '❌ Server error. Check console for details.';
+            messageDiv.classList.add('show', 'error-message');
+            signupBtn.disabled = false;
+            signupBtn.innerHTML = 'Create Account';
+            return;
+        }
 
         if (result.success) {
-            messageDiv.textContent = '✓ Account created successfully! Redirecting to login...';
+            // remember email for verification and show inline OTP input
+            sessionStorage.setItem('pending_verification_email', email);
+            if (result.otp_debug) console.log('OTP (dev):', result.otp_debug);
+
+            // hide signup form and show OTP section
+            document.getElementById('signupForm').style.display = 'none';
+            const otpSection = document.getElementById('otpSection');
+            otpSection.style.display = 'block';
+            document.getElementById('pendingEmail').textContent = result.pending_email || email;
+            if (result.otp_debug) document.getElementById('otpInput').value = result.otp_debug;
+
+            messageDiv.textContent = '✓ OTP sent to ' + (result.pending_email || email) + '. Enter it below to complete signup.';
             messageDiv.classList.add('show', 'success-message');
-            setTimeout(() => {
-                window.location.href = 'login.html';
-            }, 2000);
         } else {
-            messageDiv.textContent = '❌ ' + result.message;
+            messageDiv.textContent = '❌ ' + (result.message || 'Signup failed');
             messageDiv.classList.add('show', 'error-message');
+            if (result.debug) console.log('signup debug:', result.debug);
             signupBtn.disabled = false;
             signupBtn.innerHTML = 'Create Account';
         }
     } catch (error) {
-        messageDiv.textContent = '❌ Connection error. Please try again.';
+        console.error('Signup request failed:', error);
+        messageDiv.textContent = '❌ Connection error. Please try again (see console).';
         messageDiv.classList.add('show', 'error-message');
         signupBtn.disabled = false;
         signupBtn.innerHTML = 'Create Account';
     }
+}
+
+// OTP verification handlers (inline after signup)
+async function verifyOTP_inline() {
+    const otp = document.getElementById('otpInput').value.trim();
+    const msg = document.getElementById('otpMessage');
+    const btn = document.getElementById('verifyOtpBtn');
+    if (!/^\d{6}$/.test(otp)) { msg.textContent = 'Enter a 6-digit OTP'; msg.style.color = 'red'; return; }
+    btn.disabled = true; msg.textContent = 'Verifying...'; msg.style.color = '#666';
+    try {
+        const res = await fetch('verify_otp.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'otp=' + encodeURIComponent(otp)
+        });
+        const data = await res.json();
+        if (data.success) {
+            msg.style.color = 'green'; msg.textContent = data.message || 'Account verified';
+            sessionStorage.removeItem('pending_verification_email');
+            setTimeout(() => window.location.href = 'login.html', 1200);
+        } else {
+            msg.style.color = 'red'; msg.textContent = data.message || 'Wrong OTP';
+        }
+    } catch (e) {
+        console.error(e); msg.style.color = 'red'; msg.textContent = 'Network error';
+    } finally { btn.disabled = false; }
+}
+
+async function resendOTP_inline() {
+    const btn = document.getElementById('resendOtpBtn');
+    const msg = document.getElementById('otpMessage');
+    btn.disabled = true; msg.style.color = '#666'; msg.textContent = 'Resending...';
+    const pending = sessionStorage.getItem('pending_verification_email') || document.getElementById('email').value.trim();
+    try {
+        const res = await fetch('resend_otp.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'email=' + encodeURIComponent(pending)
+        });
+        const data = await res.json();
+        if (data.success) {
+            msg.style.color = 'green'; msg.textContent = data.message || 'OTP resent';
+            if (data.otp_debug) alert('OTP (dev): ' + data.otp_debug);
+        } else {
+            msg.style.color = 'red'; msg.textContent = data.message || 'Could not resend OTP';
+        }
+    } catch (e) {
+        console.error(e); msg.style.color = 'red'; msg.textContent = 'Network error';
+    } finally { btn.disabled = false; setTimeout(()=> msg.textContent = '', 5000); }
 }
 </script>
 

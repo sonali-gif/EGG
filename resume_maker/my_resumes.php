@@ -64,6 +64,7 @@ $result = $stmt->get_result();
                 <a class="action-btn" href="preview.html?id=<?= $row['id'] ?>">View</a>
                 <a class="action-btn" href="edit.php?id=<?= $row['id'] ?>">Edit</a>
                 <button class="small-btn secondary" onclick="downloadResume(<?= $row['id'] ?>)">Download</button>
+                <button class="small-btn" style="background:#e74c3c;" onclick="deleteResume(<?= $row['id'] ?>)">Delete</button>
             </div>
         </div>
     <?php endwhile; ?>
@@ -74,6 +75,28 @@ $result = $stmt->get_result();
 function downloadResume(id){
     // open preview page and let user download from there
     window.open('preview.html?id='+id, '_blank');
+}
+function downloadResume(id){
+    window.open('preview.html?id='+id, '_blank');
+}
+
+function deleteResume(id){
+    if(!confirm("Are you sure you want to delete this resume?")) return;
+
+    fetch("delete.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: "id=" + id
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.success){
+            alert("Resume deleted successfully!");
+            location.reload();
+        } else {
+            alert(data.message);
+        }
+    });
 }
 </script>
 
