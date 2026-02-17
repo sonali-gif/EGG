@@ -404,6 +404,7 @@ h1 {
     <h1>📝 Resume Maker</h1>
     <div class="nav-links">
         <span class="user-info" id="userInfo"></span>
+        <button class="logout-btn" id="myResumesBtn" onclick="location.href='my_resumes.php'" style="display:none;margin-right:10px;">My Resumes</button>
         <button class="logout-btn" onclick="logout()" id="logoutBtn" style="display:none;">Logout</button>
     </div>
 </div>
@@ -544,6 +545,7 @@ async function checkAuth() {
         if (data.authenticated) {
             document.getElementById('userInfo').textContent = `👤 Welcome, ${data.username}!`;
             document.getElementById('logoutBtn').style.display = 'inline-block';
+            document.getElementById('myResumesBtn').style.display = 'inline-block';
         } else {
             // Redirect to login if not authenticated
             window.location.href = 'login.html';

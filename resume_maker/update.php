@@ -1,15 +1,33 @@
 <?php
 session_start();
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.html');
+    exit;
+}
 $conn = new mysqli("localhost","root","","resume_db");
+if ($conn->connect_error) {
+    http_response_code(500);
+    die('Database error');
+}
 
-$id = $_POST["id"];
-$user_id = $_SESSION["user_id"];
-$skills = $_POST["skills"];
-$experience = $_POST["experience"];
+// validate input
+$id = isset($_POST['id']) ? intval($_POST['id']) : 0;
+$user_id = $_SESSION['user_id'];
+$skills = isset($_POST['skills']) ? trim($_POST['skills']) : '';
+$experience = isset($_POST['experience']) ? trim($_POST['experience']) : '';
 
-$conn->query("UPDATE resumes 
-SET skills='$skills', experience='$experience' 
-WHERE id='$id' AND user_id='$user_id'");
+if ($id <= 0 || $skills === '' ) {
+    header('Location: my_resumes.php?updated=0');
+    exit;
+}
 
-header("Location: my_resumes.php");
+// use prepared statement
+$stmt = $conn->prepare("UPDATE resumes SET skills = ?, experience = ? WHERE id = ? AND user_id = ?");
+$stmt->bind_param('ssii', $skills, $experience, $id, $user_id);
+$ok = $stmt->execute();
+$stmt->close();
+$conn->close();
+
+header('Location: my_resumes.php?updated=' . ($ok ? '1' : '0'));
+exit;
 ?>

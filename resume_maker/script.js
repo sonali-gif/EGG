@@ -48,20 +48,10 @@ if (form) {
 /* ===== RESUME PREVIEW ===== */
 const resumeDiv = document.getElementById("resume");
 
-if (resumeDiv) {
-    const template = localStorage.getItem("selectedTemplate");
-    const data = JSON.parse(localStorage.getItem("resumeData"));
-
-    if (template === "template1") {
-        resumeDiv.innerHTML = `
-            <h2>${data.name}</h2>
-            <p>${data.email} | ${data.phone}</p>
-            <hr>
-            <h3>Skills</h3>
-            <p>${data.skills}</p>
-            <h3>Experience</h3>
-            <p>${data.experience}</p>
-        `;
+function renderResumeFromData(data, template) {
+    if (!data) {
+        resumeDiv.innerHTML = '<p style="text-align:center;">No resume data found.</p>';
+        return;
     }
 
     if (template === "template2") {
@@ -73,8 +63,45 @@ if (resumeDiv) {
                 <hr>
                 <strong>Skills:</strong>
                 <p>${data.skills}</p>
+                <h3>Experience</h3>
+                <p>${data.experience}</p>
             </div>
         `;
+    } else {
+        // default/template1
+        resumeDiv.innerHTML = `
+            <h2>${data.name}</h2>
+            <p>${data.email} | ${data.phone}</p>
+            <hr>
+            <h3>Skills</h3>
+            <p>${data.skills}</p>
+            <h3>Experience</h3>
+            <p>${data.experience}</p>
+        `;
+    }
+}
+
+if (resumeDiv) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const resumeId = urlParams.get('id');
+    const template = localStorage.getItem("selectedTemplate") || "template1";
+
+    if (resumeId) {
+        // fetch resume from server by id
+        fetch(`get_resume.php?id=${encodeURIComponent(resumeId)}`)
+            .then(res => {
+                if (!res.ok) throw new Error('Resume not found');
+                return res.json();
+            })
+            .then(data => {
+                renderResumeFromData(data, template);
+            })
+            .catch(err => {
+                resumeDiv.innerHTML = `<p style="text-align:center;color:#c33;">${err.message}</p>`;
+            });
+    } else {
+        const data = JSON.parse(localStorage.getItem("resumeData") || 'null');
+        renderResumeFromData(data, template);
     }
 }
 
