@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting System - Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-brand">🗳️ Voting System - Admin Panel</div>
+        <div class="navbar-menu">
+            <span class="user-name" id="userName"></span>
+            <button onclick="logout()" class="btn-danger">Logout</button>
+        </div>
+    </div>
+
+    <div class="admin-container">
+        <div class="admin-sidebar">
+            <div class="sidebar-menu">
+                <button class="menu-item active" onclick="switchTab('elections')">📋 Elections</button>
+                <button class="menu-item" onclick="switchTab('candidates')">👥 Candidates</button>
+                <button class="menu-item" onclick="switchTab('voters')">🗳️ Voters</button>
+                <button class="menu-item" onclick="switchTab('statistics')">📊 Statistics</button>
+            </div>
+        </div>
+
+        <div class="admin-content">
+            <!-- Elections Tab -->
+            <div id="electionsTab" class="tab-content active">
+                <h2>Manage Elections</h2>
+                <button class="btn-primary" onclick="showCreateElectionForm()">+ Create Election</button>
+
+                <div id="createElectionForm" style="display:none;" class="form-section">
+                    <h3>Create New Election</h3>
+                    <form onsubmit="createElection(event)">
+                        <input type="text" placeholder="Election Title" id="electionTitle" required>
+                        <textarea placeholder="Description" id="electionDescription" required></textarea>
+                        <input type="date" id="electionStart" required>
+                        <input type="date" id="electionEnd" required>
+                        <button type="submit" class="btn-primary">Create Election</button>
+                        <button type="button" onclick="document.getElementById('createElectionForm').style.display='none'" class="btn-secondary">Cancel</button>
+                    </form>
+                </div>
+
+                <div id="electionsList" class="list-container"></div>
+            </div>
+
+            <!-- Candidates Tab -->
+            <div id="candidatesTab" class="tab-content">
+                <h2>Manage Candidates</h2>
+                <button class="btn-primary" onclick="showCreateCandidateForm()">+ Add Candidate</button>
+
+                <div id="createCandidateForm" style="display:none;" class="form-section">
+                    <h3>Add New Candidate</h3>
+                    <form onsubmit="createCandidate(event)">
+                        <select id="candidateElection" required>
+                            <option value="">Select Election</option>
+                        </select>
+                        <input type="text" placeholder="Candidate Name" id="candidateName" required>
+                        <input type="text" placeholder="Party" id="candidateParty" required>
+                        <input type="text" placeholder="Symbol" id="candidateSymbol" required>
+                        <textarea placeholder="Description" id="candidateDescription"></textarea>
+                        <button type="submit" class="btn-primary">Add Candidate</button>
+                        <button type="button" onclick="document.getElementById('createCandidateForm').style.display='none'" class="btn-secondary">Cancel</button>
+                    </form>
+                </div>
+
+                <div id="candidatesList" class="list-container"></div>
+            </div>
+
+            <!-- Voters Tab -->
+            <div id="votersTab" class="tab-content">
+                <h2>Voters List</h2>
+                <div id="votersList" class="list-container"></div>
+            </div>
+
+            <!-- Statistics Tab -->
+            <div id="statisticsTab" class="tab-content">
+                <h2>Voting Statistics</h2>
+                <div id="statisticsContent" class="stats-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function checkAdminAuth() {
+            try {
+                const response = await fetch('admin_check_auth.php');
+                const data = await response.json();
+                if (!data.authenticated || !data.is_admin) {
+                    window.location.href = 'index.html';
+                } else {
+                    document.getElementById('userName').textContent = `👤 Admin: ${data.admin_name}`;
+                    loadElections();
+                    loadCandidatesForForm();
+                }
+            } catch (error) {
+                window.location.href = 'index.html';
+            }
+        }
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.getElementById(tabName + 'Tab').classList.add('active');
+
+            document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
+            event.target.classList.add('active');
+
+            if (tabName === 'candidates') loadCandidates();
+            if (tabName === 'voters') loadVoters();
+            if (tabName === 'statistics') loadStatistics();
+        }
+
+        function showCreateElectionForm() {
+            document.getElementById('createElectionForm').style.display = 'block';
+        }
+
+        function showCreateCandidateForm() {
+            document.getElementById('createCandidateForm').style.display = 'block';
+        }
+
+        async function createElection(event) {
+            event.preventDefault();
+            const data = {
+                title: document.getElementById('electionTitle').value,
+                description: document.getElementById('electionDescription').value,
+                start_date: document.getElementById('electionStart').value,
+                end_date: document.getElementById('electionEnd').value
+            };
+
+            try {
+                const response = await fetch('admin_create_election.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams(data)
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    alert('✓ Election created successfully');
+                    document.getElementById('createElectionForm').style.display = 'none';
+                    loadElections();
+                } else {
+                    alert('❌ ' + result.message);
+                }
+            } catch (error) {
+                alert('Error creating election');
+            }
+        }
+
+        async function createCandidate(event) {
+            event.preventDefault();
+            const data = {
+                election_id: document.getElementById('candidateElection').value,
+                name: document.getElementById('candidateName').value,
+                party: document.getElementById('candidateParty').value,
+                symbol: document.getElementById('candidateSymbol').value,
+                description: document.getElementById('candidateDescription').value
+            };
+
+            try {
+                const response = await fetch('admin_create_candidate.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams(data)
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    alert('✓ Candidate added successfully');
+                    document.getElementById('createCandidateForm').style.display = 'none';
+                    loadCandidates();
+                } else {
+                    alert('❌ ' + result.message);
+                }
+            } catch (error) {
+                alert('Error adding candidate');
+            }
+        }
+
+        async function loadElections() {
+            try {
+                const response = await fetch('admin_get_elections.php');
+                const data = await response.json();
+
+                const list = document.getElementById('electionsList');
+                list.innerHTML = '';
+
+                data.elections.forEach(election => {
+                    const item = document.createElement('div');
+                    item.className = 'list-item';
+                    item.innerHTML = `
+                        <div>
+                            <h4>${election.title}</h4>
+                            <p>${election.description}</p>
+                            <small>Start: ${election.start_date} | End: ${election.end_date} | Status: <strong>${election.status}</strong></small>
+                        </div>
+                        <div class="item-actions">
+                            <button onclick="editElection(${election.id})" class="btn-small">Edit</button>
+                            <button onclick="deleteElection(${election.id})" class="btn-danger">Delete</button>
+                        </div>
+                    `;
+                    list.appendChild(item);
+                });
+            } catch (error) {
+                console.error('Error loading elections:', error);
+            }
+        }
+
+        async function loadCandidatesForForm() {
+            try {
+                const response = await fetch('admin_get_elections.php');
+                const data = await response.json();
+
+                const select = document.getElementById('candidateElection');
+                data.elections.forEach(election => {
+                    const option = document.createElement('option');
+                    option.value = election.id;
+                    option.textContent = election.title;
+                    select.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error loading elections:', error);
+            }
+        }
+
+        async function loadCandidates() {
+            try {
+                const response = await fetch('admin_get_candidates.php');
+                const data = await response.json();
+
+                const list = document.getElementById('candidatesList');
+                list.innerHTML = '';
+
+                data.candidates.forEach(candidate => {
+                    const item = document.createElement('div');
+                    item.className = 'list-item';
+                    item.innerHTML = `
+                        <div>
+                            <h4>${candidate.name}</h4>
+                            <p>Party: ${candidate.party} | Symbol: ${candidate.symbol}</p>
+                            <small>${candidate.description}</small>
+                        </div>
+                        <div class="item-actions">
+                            <button onclick="editCandidate(${candidate.id})" class="btn-small">Edit</button>
+                            <button onclick="deleteCandidate(${candidate.id})" class="btn-danger">Delete</button>
+                        </div>
+                    `;
+                    list.appendChild(item);
+                });
+            } catch (error) {
+                console.error('Error loading candidates:', error);
+            }
+        }
+
+        async function loadVoters() {
+            try {
+                const response = await fetch('admin_get_voters.php');
+                const data = await response.json();
+
+                const list = document.getElementById('votersList');
+                list.innerHTML = '';
+
+                data.voters.forEach(voter => {
+                    const item = document.createElement('div');
+                    item.className = 'list-item';
+                    item.innerHTML = `
+                        <div>
+                            <h4>${voter.full_name}</h4>
+                            <p>Voter ID: ${voter.voter_id} | Email: ${voter.email}</p>
+                            <small>Voted: ${voter.has_voted ? '✓ Yes' : '✗ No'}</small>
+                        </div>
+                    `;
+                    list.appendChild(item);
+                });
+            } catch (error) {
+                console.error('Error loading voters:', error);
+            }
+        }
+
+        async function loadStatistics() {
+            try {
+                const response = await fetch('admin_get_statistics.php');
+                const data = await response.json();
+
+                const content = document.getElementById('statisticsContent');
+                content.innerHTML = `
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h4>Total Elections</h4>
+                            <p class="stat-number">${data.total_elections}</p>
+                        </div>
+                        <div class="stat-card">
+                            <h4>Total Candidates</h4>
+                            <p class="stat-number">${data.total_candidates}</p>
+                        </div>
+                        <div class="stat-card">
+                            <h4>Total Voters</h4>
+                            <p class="stat-number">${data.total_voters}</p>
+                        </div>
+                        <div class="stat-card">
+                            <h4>Total Votes Cast</h4>
+                            <p class="stat-number">${data.total_votes}</p>
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                console.error('Error loading statistics:', error);
+            }
+        }
+
+        function deleteElection(id) {
+            if (confirm('Are you sure? This will delete all associated data.')) {
+                fetch('admin_delete_election.php?id=' + id).then(() => loadElections());
+            }
+        }
+
+        function deleteCandidate(id) {
+            if (confirm('Are you sure you want to delete this candidate?')) {
+                fetch('admin_delete_candidate.php?id=' + id).then(() => loadCandidates());
+            }
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                fetch('logout.php').then(() => {
+                    window.location.href = 'index.html';
+                });
+            }
+        }
+
+        window.addEventListener('load', checkAdminAuth);
+    </script>
+</body>
+</html>

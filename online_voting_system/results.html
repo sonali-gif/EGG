@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting System - Results</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-brand">🗳️ Voting System</div>
+        <div class="navbar-menu">
+            <span class="user-name" id="userName"></span>
+            <a href="vote.html" class="nav-link">Vote</a>
+            <button onclick="logout()" class="btn-danger">Logout</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content-wrapper">
+            <h1>Election Results</h1>
+
+            <div id="electionInfo" class="election-info"></div>
+
+            <div id="resultsContainer" class="results-container">
+                <div id="resultsChart" class="results-chart"></div>
+                <div id="resultsList" class="results-list"></div>
+            </div>
+
+            <div id="errorMessage" class="error-message"></div>
+        </div>
+    </div>
+
+    <script>
+        async function checkAuth() {
+            try {
+                const response = await fetch('check_auth.php');
+                const data = await response.json();
+                if (!data.authenticated) {
+                    window.location.href = 'index.html';
+                } else {
+                    document.getElementById('userName').textContent = `👤 ${data.voter_name}`;
+                    loadResults();
+                }
+            } catch (error) {
+                window.location.href = 'index.html';
+            }
+        }
+
+        async function loadResults() {
+            try {
+                const response = await fetch('get_results.php');
+                const data = await response.json();
+
+                if (data.success) {
+                    displayElectionInfo(data.election);
+                    displayResults(data.results);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        function displayElectionInfo(election) {
+            const info = document.getElementById('electionInfo');
+            info.innerHTML = `
+                <div class="election-detail">
+                    <h3>${election.title}</h3>
+                    <p>${election.description}</p>
+                    <p><strong>Total Votes Cast:</strong> ${election.total_votes}</p>
+                    <small>Status: <strong>${election.status.toUpperCase()}</strong></small>
+                </div>
+            `;
+        }
+
+        function displayResults(results) {
+            const list = document.getElementById('resultsList');
+            list.innerHTML = '';
+
+            let maxVotes = Math.max(...results.map(r => r.votes), 1);
+
+            results.forEach((result, index) => {
+                const percentage = result.total_votes > 0 ? ((result.votes / result.total_votes) * 100).toFixed(2) : 0;
+                const barWidth = (result.votes / maxVotes) * 100;
+
+                const card = document.createElement('div');
+                card.className = 'result-card';
+                card.innerHTML = `
+                    <div class="result-header">
+                        <h3>${result.candidate_name}</h3>
+                        <p class="party">${result.party}</p>
+                    </div>
+                    <div class="result-bar">
+                        <div class="bar-fill" style="width: ${barWidth}%"></div>
+                    </div>
+                    <div class="result-stats">
+                        <span><strong>${result.votes}</strong> votes</span>
+                        <span>${percentage}%</span>
+                    </div>
+                `;
+                list.appendChild(card);
+            });
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                fetch('logout.php').then(() => {
+                    window.location.href = 'index.html';
+                });
+            }
+        }
+
+        window.addEventListener('load', checkAuth);
+    </script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting System - Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="auth-wrapper">
+            <div class="auth-box">
+                <h1>🗳️ Voting System</h1>
+                <p class="subtitle">Secure Online Voting Platform</p>
+
+                <div class="error-message" id="errorMessage"></div>
+
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="voter_id">Voter ID</label>
+                        <input type="text" id="voter_id" name="voter_id" placeholder="Enter your Voter ID" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    </div>
+
+                    <button type="submit" class="btn-primary">Login</button>
+                </form>
+
+                <div class="auth-toggle">
+                    Don't have an account? <a href="#" onclick="toggleForm()">Register here</a>
+                </div>
+            </div>
+
+            <div class="auth-box" id="signupBox" style="display:none;">
+                <h1>🗳️ Create Account</h1>
+                <p class="subtitle">Register as a voter</p>
+
+                <div class="error-message" id="signupError"></div>
+
+                <form id="signupForm" onsubmit="handleSignup(event)">
+                    <div class="form-group">
+                        <label for="new_voter_id">Voter ID</label>
+                        <input type="text" id="new_voter_id" name="voter_id" placeholder="e.g., VOT123456" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="full_name">Full Name</label>
+                        <input type="text" id="full_name" name="full_name" placeholder="Enter your full name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="new_password">Password</label>
+                        <input type="password" id="new_password" name="password" placeholder="Create a password" required>
+                    </div>
+
+                    <button type="submit" class="btn-primary">Register</button>
+                </form>
+
+                <div class="auth-toggle">
+                    Already have an account? <a href="#" onclick="toggleForm()">Login here</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleForm() {
+            const loginForm = document.querySelector('.auth-box');
+            const signupForm = document.getElementById('signupBox');
+            loginForm.style.display = loginForm.style.display === 'none' ? 'block' : 'none';
+            signupForm.style.display = signupForm.style.display === 'none' ? 'block' : 'none';
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            const voterId = document.getElementById('voter_id').value;
+            const password = document.getElementById('password').value;
+            const errorMsg = document.getElementById('errorMessage');
+
+            try {
+                const response = await fetch('login_handler.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: `voter_id=${voterId}&password=${password}`
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    window.location.href = 'vote.html';
+                } else {
+                    errorMsg.textContent = '❌ ' + result.message;
+                    errorMsg.style.display = 'block';
+                }
+            } catch (error) {
+                errorMsg.textContent = '❌ Connection error';
+                errorMsg.style.display = 'block';
+            }
+        }
+
+        async function handleSignup(event) {
+            event.preventDefault();
+            const voterId = document.getElementById('new_voter_id').value;
+            const fullName = document.getElementById('full_name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('new_password').value;
+            const errorMsg = document.getElementById('signupError');
+
+            try {
+                const response = await fetch('signup_handler.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: `voter_id=${voterId}&full_name=${fullName}&email=${email}&password=${password}`
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    alert('✓ Registration successful! Please login.');
+                    toggleForm();
+                } else {
+                    errorMsg.textContent = '❌ ' + result.message;
+                    errorMsg.style.display = 'block';
+                }
+            } catch (error) {
+                errorMsg.textContent = '❌ Connection error';
+                errorMsg.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>

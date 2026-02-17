@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Startup ID - Easy Government Guide</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #ffffff;
+            text-align: center;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(to right, #ff9933, #ffffff, #138808);
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        h1 {
+            color: #000080;
+            margin: 0;
+            font-size: 36px;
+        }
+
+        .menu-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 26px;
+            cursor: pointer;
+            color: #000080;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #f9f9f9;
+            overflow-x: hidden;
+            transition: 0.3s;
+            padding-top: 60px;
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+        }
+
+        .sidebar a {
+            padding: 10px 20px;
+            display: block;
+            text-decoration: none;
+            color: #000080;
+            text-align: left;
+        }
+
+        .category-title {
+            padding: 10px 20px;
+            font-weight: bold;
+            color: #000080;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .sub-item {
+            padding-left: 40px;
+            font-size: 15px;
+        }
+
+        #category-list {
+            display: none;
+        }
+
+        .sidebar a:hover {
+            background-color: #eef6ff;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 22px;
+            cursor: pointer;
+        }
+
+        /* Content */
+        .content {
+            padding: 40px 20px;
+        }
+
+        .guide-img {
+            width: 240px;
+            margin-bottom: 10px;
+        }
+
+        .content h2 {
+            color: #000080;
+            margin-bottom: 30px;
+        }
+
+        /* Info Boxes */
+        .info-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .info-box {
+            width: 360px;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        .info-box h3 {
+            color: #000080;
+            margin-bottom: 15px;
+        }
+
+        /* Checkbox */
+        .checkbox-group label {
+            display: block;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .verify-btn {
+            margin-top: 10px;
+            padding: 8px 16px;
+            background-color: #000080;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        #result {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        /* Steps */
+        .steps {
+            margin-top: 70px;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .steps h2 {
+            color: #000080;
+            margin-bottom: 30px;
+        }
+
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+        }
+
+        .step-card {
+            background-color: #eef6ff;
+            border-left: 6px solid #000080;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: left;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            background-color: #000080;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .step-card h3 {
+            color: #000080;
+            margin-top: 10px;
+        }
+
+        .step-card a {
+            color: #000080;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        /* Fee */
+        .fee-box {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #eef6ff;
+            border: 2px solid #138808;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .fee-box h3 {
+            color: #000080;
+            margin-bottom: 10px;
+        }
+
+        .fee {
+            font-size: 22px;
+            font-weight: bold;
+            color: #138808;
+        }
+
+        .fee-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .fee-table th,
+        .fee-table td {
+            border: 1px solid #138808;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .fee-table th {
+            background-color: #138808;
+            color: white;
+        }
+
+        .fee-table td {
+            color: #000080;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #000080;
+            color: white;
+            padding: 10px;
+            font-size: 14px;
+            margin-top: 60px;
+        }
+
+        @media (max-width: 480px) {
+            .info-box {
+                width: 100%;
+            }
+
+            .fee-box {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <span class="close-btn" onclick="closeMenu()">✖</span>
+
+        <a href="INDEX.HTML">Home</a>
+
+        <div class="category-title" onclick="toggleCategories()">
+            <span id="category-arrow">▶</span> Categories
+        </div>
+
+        <div id="category-list">
+            <a href="AADHAR.HTML" class="sub-item">Aadhaar Card</a>
+            <a href="VOTER.HTML" class="sub-item">Voter ID</a>
+            <a href="DRIVING.HTML" class="sub-item">Driving License</a>
+            <a href="PAN-MINOR.HTML" class="sub-item">PAN Card (Minor)</a>
+            <a href="PAN-MAJOR.HTML" class="sub-item">PAN Card (Major)</a>
+            <a href="GST.HTML" class="sub-item">GST Registration</a>
+            <a href="PASSPORT.HTML" class="sub-item">Indian Passport</a>
+            <a href="RATION.HTML" class="sub-item">Ration Card</a>
+
+        </div>
+
+        <a href="ABOUT.HTML">About Us</a>
+        <a href="FEEDBACK.HTML">Feedback & Support</a>
+
+    </div>
+
+    <!-- Header -->
+    <div class="header">
+        <span class="menu-btn" onclick="openMenu()">☰</span>
+        <h1>EGG – Easy Government Guide</h1>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+
+        <img src="startup-id.png" alt="Startup ID" class="guide-img">
+        <h2>Startup Registration & DPIIT Recognition (Startup ID)</h2>
+
+        <!-- Info Boxes -->
+        <div class="info-container">
+
+            <!-- Eligibility -->
+            <div class="info-box">
+                <h3>Who Can Register</h3>
+                <ul>
+                    <li>Innovative, scalable business ideas</li>
+                    <li>Less than 10 years since incorporation</li>
+                    <li>Annual turnover under ₹100 crore</li>
+                    <li>Entity registered as Private Ltd/LLP/Partnership</li>
+                </ul>
+            </div>
+
+            <!-- Documents -->
+            <div class="info-box">
+                <h3>Documents Required</h3>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" id="inc"> Certificate of Incorporation</label>
+                    <label><input type="checkbox" id="moa"> Memorandum & Articles (MOA/AOA)</label>
+                    <label><input type="checkbox" id="pan"> PAN of Company</label>
+                    <label><input type="checkbox" id="address"> Registered Office Proof</label>
+                    <label><input type="checkbox" id="overview"> Short Business Overview</label>
+                </div>
+                <button class="verify-btn" onclick="verifyDocs()">Verify</button>
+                <div id="result"></div>
+            </div>
+
+        </div>
+
+        <!-- Steps -->
+        <div class="steps">
+            <h2>Step-by-Step (Online – Startup India / MCA)</h2>
+
+            <div class="steps-container">
+
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Incorporate Your Company</h3>
+                    <p>Register as Private Limited / LLP / Partnership on MCA portal.</p>
+                    <p><a href="https://www.mca.gov.in/" target="_blank">Ministry of Corporate Affairs (MCA)</a></p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Obtain PAN & TAN</h3>
+                    <p>Apply for PAN for the company and TAN if required.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Create Startup India Account</h3>
+                    <p>Register at Startup India portal and apply for recognition.</p>
+                    <p><a href="https://www.startupindia.gov.in/" target="_blank">Startup India</a></p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3>Prepare Document Pack</h3>
+                    <ul>
+                        <li>Incorporation certificate</li>
+                        <li>MOA/AOA</li>
+                        <li>PAN, address proof</li>
+                        <li>Brief business plan/overview</li>
+                    </ul>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">5</div>
+                    <h3>Apply for DPIIT Recognition</h3>
+                    <p>Submit details on Startup India; upload required documents and declaration.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">6</div>
+                    <h3>Wait for Verification</h3>
+                    <p>DPIIT reviews application and issues recognition certificate.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">7</div>
+                    <h3>Receive Startup ID</h3>
+                    <p>Once approved, you will receive a Startup Recognition number/ID.</p>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Offline Steps -->
+        <div class="steps">
+            <h2>Step-by-Step (Offline – Paper Preparation)</h2>
+
+            <div class="steps-container">
+
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Collect Documents</h3>
+                    <p>Obtain printed copies of INC certificates, MOA/AOA, PAN.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Prepare Business Overview</h3>
+                    <p>Write a concise summary of innovation and scalability.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Submit to Incubators / Mentor (Optional)</h3>
+                    <p>Get mentorship letters or support documents to strengthen application.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3>Keep Records</h3>
+                    <p>Maintain all signed & attested documents for verification.</p>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Fee -->
+        <div class="fee-box">
+            <h3>Startup Registration Fees (Indicative)</h3>
+
+            <table class="fee-table">
+                <tr>
+                    <th>Service</th>
+                    <th>Typical Fee</th>
+                </tr>
+                <tr>
+                    <td>Company Incorporation (Private Ltd)</td>
+                    <td>₹6,000 – ₹15,000 (varies)</td>
+                </tr>
+                <tr>
+                    <td>Startup India Recognition (DPIIT)</td>
+                    <td>Free</td>
+                </tr>
+                <tr>
+                    <td>GST Registration</td>
+                    <td>Free</td>
+                </tr>
+            </table>
+
+            <p style="margin-top:12px; color:#666;">Note: Professional fees for consultants/CA not included.</p>
+        </div>
+
+
+    </div>
+
+    <div class="footer">
+        © 2026 EGG - Easy Government Guide | For the citizens of India
+    </div>
+
+    <script>
+        function openMenu() {
+            document.getElementById("sidebar").style.width = "250px";
+        }
+
+        function closeMenu() {
+            document.getElementById("sidebar").style.width = "0";
+        }
+
+        function toggleCategories() {
+            const list = document.getElementById("category-list");
+            const arrow = document.getElementById("category-arrow");
+
+            if (list.style.display === "block") {
+                list.style.display = "none";
+                arrow.textContent = "▶";
+            } else {
+                list.style.display = "block";
+                arrow.textContent = "▼";
+            }
+        }
+
+        function verifyDocs() {
+            const missing = [];
+            if (!inc.checked) missing.push("Certificate of Incorporation");
+            if (!moa.checked) missing.push("MOA / AOA");
+            if (!pan.checked) missing.push("Company PAN");
+            if (!address.checked) missing.push("Registered Office Proof");
+            if (!overview.checked) missing.push("Business Overview");
+
+            const result = document.getElementById("result");
+
+            if (missing.length === 0) {
+                result.innerHTML = "✔ All documents are ready";
+                result.style.color = "green";
+            } else {
+                result.innerHTML = "✖ Missing Documents:<br>" + missing.join("<br>");
+                result.style.color = "red";
+            }
+        }
+    </script>
+
+</body>
+
+</html>

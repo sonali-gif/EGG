@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting System - Cast Your Vote</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-brand">🗳️ Voting System</div>
+        <div class="navbar-menu">
+            <span class="user-name" id="userName"></span>
+            <a href="results.html" class="nav-link">View Results</a>
+            <button onclick="logout()" class="btn-danger">Logout</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content-wrapper">
+            <h1>Cast Your Vote</h1>
+            <p class="section-subtitle">Select your candidate below</p>
+
+            <div id="electionInfo" class="election-info"></div>
+
+            <div id="candidatesGrid" class="candidates-grid"></div>
+
+            <div id="successMessage" class="success-message" style="display:none;">
+                <h3>✓ Vote Submitted Successfully!</h3>
+                <p>Thank you for voting. <a href="results.html">View results</a></p>
+            </div>
+
+            <div id="errorMessage" class="error-message"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentElectionId = null;
+        let userHasVoted = false;
+
+        async function checkAuth() {
+            try {
+                const response = await fetch('check_auth.php');
+                const data = await response.json();
+                if (!data.authenticated) {
+                    window.location.href = 'index.html';
+                } else {
+                    document.getElementById('userName').textContent = `👤 ${data.voter_name}`;
+                    loadElectionAndCandidates();
+                }
+            } catch (error) {
+                window.location.href = 'index.html';
+            }
+        }
+
+        async function loadElectionAndCandidates() {
+            try {
+                const response = await fetch('get_election_candidates.php');
+                const data = await response.json();
+
+                if (data.success) {
+                    currentElectionId = data.election.id;
+                    userHasVoted = data.user_has_voted;
+
+                    displayElectionInfo(data.election);
+
+                    if (userHasVoted) {
+                        document.getElementById('errorMessage').innerHTML = '<h3>⚠️ You have already voted in this election</h3>';
+                        document.getElementById('errorMessage').style.display = 'block';
+                        document.getElementById('candidatesGrid').style.display = 'none';
+                    } else {
+                        displayCandidates(data.candidates);
+                    }
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        function displayElectionInfo(election) {
+            const info = document.getElementById('electionInfo');
+            info.innerHTML = `
+                <div class="election-detail">
+                    <h3>${election.title}</h3>
+                    <p>${election.description}</p>
+                    <small>Status: <strong>${election.status.toUpperCase()}</strong></small>
+                </div>
+            `;
+        }
+
+        function displayCandidates(candidates) {
+            const grid = document.getElementById('candidatesGrid');
+            grid.innerHTML = '';
+
+            candidates.forEach(candidate => {
+                const card = document.createElement('div');
+                card.className = 'candidate-card';
+                card.innerHTML = `
+                    <div class="candidate-header">
+                        <h3>${candidate.name}</h3>
+                        <p class="party">${candidate.party}</p>
+                    </div>
+                    <div class="candidate-details">
+                        <p><strong>Symbol:</strong> ${candidate.symbol}</p>
+                        <p>${candidate.description}</p>
+                    </div>
+                    <button onclick="submitVote(${candidate.id})" class="btn-primary btn-block">Vote for ${candidate.name.split(' ')[0]}</button>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        async function submitVote(candidateId) {
+            if (!confirm('Are you sure you want to vote for this candidate? This action cannot be undone.')) {
+                return;
+            }
+
+            try {
+                const response = await fetch('submit_vote.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: `election_id=${currentElectionId}&candidate_id=${candidateId}`
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    document.getElementById('candidatesGrid').style.display = 'none';
+                    document.getElementById('successMessage').style.display = 'block';
+                    document.getElementById('errorMessage').style.display = 'none';
+                } else {
+                    document.getElementById('errorMessage').textContent = '❌ ' + result.message;
+                    document.getElementById('errorMessage').style.display = 'block';
+                }
+            } catch (error) {
+                document.getElementById('errorMessage').textContent = '❌ Error submitting vote';
+                document.getElementById('errorMessage').style.display = 'block';
+            }
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                fetch('logout.php').then(() => {
+                    window.location.href = 'index.html';
+                });
+            }
+        }
+
+        window.addEventListener('load', checkAuth);
+    </script>
+</body>
+</html>
